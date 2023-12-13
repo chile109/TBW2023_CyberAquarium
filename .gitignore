@@ -104,3 +104,5 @@ Cargo.lock
 # VSCode settings
 .vscode/
 *.code-workspace
+erc-6551/artifacts
+erc-6551/node_modules
