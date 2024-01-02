@@ -31,10 +31,9 @@ interface cardProps {
 const Card = ({ cardData, cardBgColor, colors }: cardProps) => {
   const [isFlipped, setIsFlipped] = useState(true);
   const { nfts } = useNFT();
-  console.log(nfts.length);
+  console.log(nfts?.length);
 
-  const lastItemOriginalUrl = nfts[nfts.length - 1]?.image_preview_url || '';
-
+  const lastItemOriginalUrl = nfts[nfts?.length - 1]?.image_preview_url || '';
 
   const convertColor = (clr: colorRawType) => {
     if (clr) {
