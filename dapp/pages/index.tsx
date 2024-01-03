@@ -3,11 +3,11 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import useNFT from '../hooks/useNFT';
+import { Box, Container, Typography, Stack, Button, Grid, Card, CardMedia, CardContent, CardActions } from '@mui/material';
 
 const Home: NextPage = () => {
   const { nfts } = useNFT();
   console.log(nfts);
-
   return (
     <div className={styles.container}>
       <Head>
@@ -21,59 +21,61 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <ConnectButton />
-
-        <h1 className={styles.title}>
-          Welcome to <a href="">RainbowKit</a> + <a href="">wagmi</a> +{' '}
-          <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a className={styles.card} href="https://rainbowkit.com">
-            <h2>RainbowKit Documentation &rarr;</h2>
-            <p>Learn how to customize your wallet connection flow.</p>
-          </a>
-
-          <a className={styles.card} href="https://wagmi.sh">
-            <h2>wagmi Documentation &rarr;</h2>
-            <p>Learn how to interact with Ethereum.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://github.com/rainbow-me/rainbowkit/tree/main/examples"
+        <main>
+          {/* Hero unit */}
+          <Box
+            sx={{
+              bgcolor: 'background.paper',
+              pt: 8,
+            }}
           >
-            <h2>RainbowKit Examples &rarr;</h2>
-            <p>Discover boilerplate example RainbowKit projects.</p>
-          </a>
-
-          <a className={styles.card} href="https://nextjs.org/docs">
-            <h2>Next.js Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-          >
-            <h2>Next.js Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            className={styles.card}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+            <Container maxWidth="sm">
+              <Typography
+                component="h1"
+                variant="h2"
+                align="center"
+                color="text.primary"
+                gutterBottom
+              >
+                Album layout
+              </Typography>
+            </Container>
+          </Box>
+          <Container sx={{ py: 8 }} maxWidth="md">
+            {/* End hero unit */}
+            <Grid container spacing={4}>
+              {nfts.map((card) => (
+                <Grid item key={card} xs={12} sm={6} md={4}>
+                  <Card
+                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                  >
+                    <CardMedia
+                      component="div"
+                      sx={{
+                        // 16:9
+                        pt: '56.25%',
+                      }}
+                      image="https://source.unsplash.com/random?wallpapers"
+                    />
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Heading
+                      </Typography>
+                      <Typography>
+                        This is a media card. You can use this section to describe the
+                        content.
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button size="small">View</Button>
+                      <Button size="small">Edit</Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          </Container>
+        </main>
       </main>
     </div>
   );
