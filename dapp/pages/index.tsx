@@ -4,12 +4,15 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import useNFT from '../hooks/useNFT';
 import { Box, Container, Typography, Stack, Button, Grid, Card, CardMedia, CardContent, CardActions } from '@mui/material';
+import Ball from '../components/BouncingBall';
+import Aquarium from '../components/Aquarium';
 
 const Home: NextPage = () => {
   const { nfts } = useNFT();
   console.log(nfts);
   return (
     <div className={styles.container}>
+      {nfts.map((nft) => <Ball key={nft.id} image={nft.image_preview_url} />)}
       <Head>
         <title>RainbowKit App</title>
         <meta

@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 
-const Ball = () => {
-  const ballSize = 20;
-  const velocity = { x: 1, y: 1 };
+const Ball = ({ image }) => {
+  const ballSize = 100;
+  const initialVelocity = { x: 1 * (Math.random() - 0.5), y: 0.5 * (Math.random() - 0.5) }; // 初始速度隨機
+  const velocity = useRef(initialVelocity);
 
   const ballRef = useRef(null);
 
@@ -12,22 +13,16 @@ const Ball = () => {
     const moveBall = () => {
       const rect = ball.getBoundingClientRect();
 
-      if (
-        rect.left + velocity.x < 0 ||
-        rect.right + velocity.x > window.innerWidth
-      ) {
-        velocity.x = -velocity.x;
+      if (rect.left + velocity.current.x < 0 || rect.right + velocity.current.x > window.innerWidth) {
+        velocity.current.x = -velocity.current.x;
       }
 
-      if (
-        rect.top + velocity.y < 0 ||
-        rect.bottom + velocity.y > window.innerHeight
-      ) {
-        velocity.y = -velocity.y;
+      if (rect.top + velocity.current.y < 0 || rect.bottom + velocity.current.y > window.innerHeight) {
+        velocity.current.y = -velocity.current.y;
       }
 
-      ball.style.left = rect.left + velocity.x + 'px';
-      ball.style.top = rect.top + velocity.y + 'px';
+      ball.style.left = rect.left + velocity.current.x + 'px';
+      ball.style.top = rect.top + velocity.current.y + 'px';
 
       requestAnimationFrame(moveBall);
     };
@@ -36,16 +31,18 @@ const Ball = () => {
   }, []);
 
   return (
-    <div
+    <img
       ref={ballRef}
+      src={image}
+      alt="Ball"
       style={{
         position: 'absolute',
         width: ballSize + 'px',
         height: ballSize + 'px',
-        backgroundColor: 'red',
         borderRadius: '50%',
+        zIndex: -1, // 設置更高的 zIndex
       }}
-    ></div>
+    />
   );
 };
 
