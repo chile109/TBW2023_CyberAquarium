@@ -5,9 +5,15 @@ import styles from '../styles/Home.module.css';
 import useNFT from '../hooks/useNFT';
 import { Box, Container, Typography, Stack, Button, Grid, Card, CardMedia, CardContent, CardActions } from '@mui/material';
 
+interface nftsData {
+  image_original_url?: string;
+  image_preview_url?: string;
+  image_url?: string;
+}
+
 const Home: NextPage = () => {
   const { nfts } = useNFT();
-  console.log(nfts);
+  console.log(nfts)
   return (
     <div className={styles.container}>
       <Head>
@@ -37,39 +43,28 @@ const Home: NextPage = () => {
                 color="text.primary"
                 gutterBottom
               >
-                Album layout
+                Here is your fish :
               </Typography>
             </Container>
           </Box>
           <Container sx={{ py: 8 }} maxWidth="md">
-            {/* End hero unit */}
             <Grid container spacing={4}>
-              {nfts.map((card) => (
-                <Grid item key={card} xs={12} sm={6} md={4}>
+              {nfts.map((nft: nftsData) => (
+                <Grid item key={nft.image_original_url} xs={12} sm={6} md={4}>
                   <Card
-                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                    sx={{
+                      height: '100%', display: 'flex', flexDirection: 'column',
+                      borderRadius: '50%',
+                    }}
                   >
                     <CardMedia
                       component="div"
                       sx={{
                         // 16:9
-                        pt: '56.25%',
+                        pt: '100%',
                       }}
-                      image="https://source.unsplash.com/random?wallpapers"
+                      image={nft.image_preview_url || ''}
                     />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography gutterBottom variant="h5" component="h2">
-                        Heading
-                      </Typography>
-                      <Typography>
-                        This is a media card. You can use this section to describe the
-                        content.
-                      </Typography>
-                    </CardContent>
-                    <CardActions>
-                      <Button size="small">View</Button>
-                      <Button size="small">Edit</Button>
-                    </CardActions>
                   </Card>
                 </Grid>
               ))}
