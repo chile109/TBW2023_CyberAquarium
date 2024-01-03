@@ -1,5 +1,6 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
+import Image from 'next/image'
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import useNFT from '../hooks/useNFT';
@@ -13,7 +14,9 @@ interface nftsData {
 
 const Home: NextPage = () => {
   const { nfts } = useNFT();
-  console.log(nfts)
+  console.log(nfts);
+  const lastItemOriginalUrl = (nfts as nftsData[])[nfts.length - 1]?.image_preview_url || '';
+
   return (
     <div className={styles.container}>
       <Head>
@@ -29,25 +32,38 @@ const Home: NextPage = () => {
         <ConnectButton />
         <main>
           {/* Hero unit */}
-          <Box
+          <Stack
+            spacing={2}
             sx={{
               bgcolor: 'background.paper',
               pt: 8,
             }}
+
           >
-            <Container maxWidth="sm">
-              <Typography
-                component="h1"
-                variant="h2"
-                align="center"
-                color="text.primary"
-                gutterBottom
-              >
-                Here is your fish :
-              </Typography>
-            </Container>
-          </Box>
-          <Container sx={{ py: 8 }} maxWidth="md">
+            <Box
+              sx={{
+                // width: '5vw',
+                // height: '5vh',
+                borderRadius: 2,
+              }}
+            >
+              <Image src={lastItemOriginalUrl} alt="123"
+                width={100}
+                height={100}
+              />
+            </Box>
+          </Stack>
+          <Typography
+            component="h1"
+            variant="h2"
+            align="center"
+            color="text.primary"
+            gutterBottom
+            sx={{ mt: '20px', }}
+          >
+            Here is your fish :
+          </Typography>
+          <Container sx={{ py: 2 }} maxWidth="md">
             <Grid container spacing={4}>
               {nfts.map((nft: nftsData) => (
                 <Grid item key={nft.image_original_url} xs={12} sm={6} md={4}>
