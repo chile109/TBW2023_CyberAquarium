@@ -31,28 +31,34 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <ConnectButton />
         <main>
-          {/* Hero unit */}
-          <Stack
-            spacing={2}
+          <Box
             sx={{
-              bgcolor: 'background.paper',
-              pt: 8,
-            }}
-
-          >
-            <Box
+              width: '30vw',
+              height: '30vh',
+              mt: '5vh',
+            }}>
+            <Card
               sx={{
-                // width: '5vw',
-                // height: '5vh',
-                borderRadius: 2,
+                height: '100%', display: 'flex', flexDirection: 'column', borderRadius: '15px',
               }}
             >
-              <Image src={lastItemOriginalUrl} alt="123"
-                width={100}
-                height={100}
+              <CardMedia
+                component="div"
+                sx={{
+                  // 16:9
+                  pt: '100%',
+                }}
+                image={lastItemOriginalUrl || ''}
               />
-            </Box>
-          </Stack>
+            </Card>
+          </Box>
+          {/* <Image src={lastItemOriginalUrl} alt="123"
+            // width={100}
+            // height={100}
+            layout='fill'
+            z-tabIndex={-99}
+            style={{ position: 'absolute', zIndex: -1 }}
+          /> */}
           <Typography
             component="h1"
             variant="h2"
