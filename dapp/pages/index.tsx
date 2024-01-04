@@ -5,7 +5,7 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import useNFT from '../hooks/useNFT';
 import useImgColor from "../hooks/useImgColor";
-import { Box, Container, Typography, Grid, Card, CardMedia } from '@mui/material';
+import { Box, Container, Typography, Grid, Card, CardMedia, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
 import Ball from '../components/BouncingBall';
 
@@ -92,12 +92,36 @@ const Home: NextPage = () => {
         />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-      <DisplayLastSecondColor colors={sortedColors} />
+
+      {/* <DisplayLastSecondColor colors={sortedColors} /> */}
+
+      <Image
+        src="/aquarium-001.jpeg"
+        alt="bg"
+        // width={100}
+        // height={100}
+        layout='fill'
+        z-tabIndex={-99}
+        style={{ position: 'absolute', zIndex: -2 }}
+      />
 
       <main className={styles.main}>
-        <ConnectButton />
-        <main>
-          <Container
+        <Paper
+          elevation={6}
+          sx={{
+            padding: '20px',
+            borderRadius: '20px'
+          }}>
+          <Image
+            src='/logo-002.png'
+            alt='1234'
+            layout='responsive'
+            width={100}
+            height={100}
+            style={{ marginBottom: '15px', borderRadius: '20px' }}
+          ></Image>
+          <ConnectButton />
+          {/* <Container
             sx={{
               width: '100%',
               display: 'flex',
@@ -125,24 +149,20 @@ const Home: NextPage = () => {
                 image={lastItemOriginalUrl || ''}
               />
             </Card>
-          </Container>
-          {/* <Image src={lastItemOriginalUrl} alt="123"
-            // width={100}
-            // height={100}
-            layout='fill'
-            z-tabIndex={-99}
-            style={{ position: 'absolute', zIndex: -1 }}
-          /> */}
-          <Typography
+          </Container> */}
+          {/* <Typography
             component="h1"
             variant="h3"
             align="center"
             color="text.primary"
             gutterBottom
-            sx={{ mt: '20px', }}
+            sx={{
+              mt: '20px',
+              fontFamily: 'Roboto, sans-serif'
+            }}
           >
-            Here is your fish :
-          </Typography>
+            Your Fish:
+          </Typography> */}
           <Container sx={{ py: 2 }} maxWidth="md">
             <Grid container spacing={4}>
               {nfts.map((nft: nftsData) => (
@@ -166,9 +186,9 @@ const Home: NextPage = () => {
               ))}
             </Grid>
           </Container>
-        </main>
+        </Paper>
       </main>
-    </div>
+    </div >
   );
 };
 
