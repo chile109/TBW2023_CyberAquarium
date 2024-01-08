@@ -96,7 +96,7 @@ const Home: NextPage = () => {
       {/* <DisplayLastSecondColor colors={sortedColors} /> */}
 
       <Image
-        src="/aquarium-001.jpeg"
+        src="/aquarium/aquarium-1.jpeg"
         alt="bg"
         layout='fill'
         z-tabIndex={-99}
