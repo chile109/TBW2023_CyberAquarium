@@ -8,7 +8,9 @@ const useNFT = (_address?: string) => {
 
   useEffect(() => {
     fetch(
-      `https://testnets-api.opensea.io/api/v1/assets?owner=0xd8FDf15e99b371214D6f1728C85f96635361978c&order_direction=desc&offset=0&limit=20&include_orders=false`,
+      `https://testnets-api.opensea.io/api/v1/assets?owner=${addr}&order_direction=desc&offset=0&limit=5&include_orders=false`,
+      // 0xd8FDf15e99b371214D6f1728C85f96635361978c
+      // 0x448C510Ada54D79701112e9aAf8F3d3Eab60CB48
       {
         method: "GET",
         headers: {
