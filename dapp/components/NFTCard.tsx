@@ -1,33 +1,41 @@
 
-import { Typography, Box, Grid, Avatar } from '@mui/material';
-import Link from 'next/link';
+import { Typography, Box, Grid, Avatar, Card, CardMedia } from '@mui/material';
 import useNFT from "../hooks/useNFT";
+
 interface Props {
   ethAddress: string;
 }
+interface nftsData {
+  id: number;
+  image_original_url?: string;
+  image_preview_url?: string;
+  image_url?: string;
+}
+
 const NFTCard = ({ ethAddress }: Props) => {
   const { nfts } = useNFT(ethAddress);
   return (
     <>
-      {nfts && (
-        <Typography mt={4} mb={4} color="brand-dark" fontSize="20px">
-          your fish
-        </Typography>
-      )}
-      <Grid mb={4} columns={5} spacing={1}>
-        {nfts &&
-          nfts.map((data: any) => (
-            <Link key={data.id} href={data.permalink}>
-              <Avatar
-                src={data.image_preview_url}
-              >
-                <Box></Box>
-              </Avatar>
-              <Typography fontSize="xs" mt="10px">
-                {data.name}
-              </Typography>
-            </Link>
-          ))}
+      <Grid container spacing={4}>
+        {nfts && nfts.map((nft: nftsData) => (
+          <Grid item key={nft.image_original_url} xs={12} sm={6} md={4}>
+            <Card
+              sx={{
+                height: '100%', display: 'flex', flexDirection: 'column',
+                borderRadius: '50%', boxShadow: 5,
+              }}
+            >
+              <CardMedia
+                component="div"
+                sx={{
+                  // 16:9
+                  pt: '100%',
+                }}
+                image={nft.image_preview_url || ''}
+              />
+            </Card>
+          </Grid>
+        ))}
       </Grid>
     </>
   );

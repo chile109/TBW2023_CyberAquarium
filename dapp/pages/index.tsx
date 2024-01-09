@@ -1,26 +1,28 @@
+import { SetStateAction, useState, useEffect } from 'react';
 import styles from '../styles/Home.module.css';
 import type { NextPage } from 'next';
 import Image from 'next/image'
 import Head from 'next/head';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Container, Grid, Card, CardMedia, Paper } from '@mui/material';
-import useNFT from '../hooks/useNFT';
-import Ball from '../components/BouncingBall';
-
-interface nftsData {
-  id: number;
-  image_original_url?: string;
-  image_preview_url?: string;
-  image_url?: string;
-}
+import { Container, Paper, TextField, Button } from '@mui/material';
+import NFTCard from '../components/NFTCard';
+import BouncingBall from '../components/BouncingBall';
 
 const Home: NextPage = () => {
-  const { nfts } = useNFT() as { nfts: nftsData[] };
-  // console.log(nfts); 
+  const [addressInput, setAddressInput] = useState('');
+  const [add, setAdd] = useState('');
+
+  const SendAddress = () => {
+    setAdd(addressInput);
+  };
+
+  useEffect(() => {
+    console.log(addressInput);
+  }, [addressInput]);
 
   return (
     <div className={styles.container}>
-      {nfts.map((nft: nftsData) => <Ball key={nft.id} image={nft.image_preview_url} id={0} />)}
+      <BouncingBall ethAddress={add || ''} />
       <Head>
         <title>CyberAquarium</title>
         <meta
@@ -53,27 +55,23 @@ const Home: NextPage = () => {
           ></Image>
           <ConnectButton />
           <Container sx={{ py: 2 }} maxWidth="md">
-            <Grid container spacing={4}>
-              {nfts.map((nft: nftsData) => (
-                <Grid item key={nft.image_original_url} xs={12} sm={6} md={4}>
-                  <Card
-                    sx={{
-                      height: '100%', display: 'flex', flexDirection: 'column',
-                      borderRadius: '50%', boxShadow: 5,
-                    }}
-                  >
-                    <CardMedia
-                      component="div"
-                      sx={{
-                        // 16:9
-                        pt: '100%',
-                      }}
-                      image={nft.image_preview_url || ''}
-                    />
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
+            <TextField fullWidth label="type address" id="123"
+              sx={{
+                mb: '15px'
+              }}
+              onChange={(e: { target: { value: SetStateAction<string> } }) => {
+                if (e.target.value.toString().startsWith("0x")) {
+                  setAddressInput(e.target.value);
+                }
+              }}
+            />
+            <Button fullWidth variant="outlined" sx={{
+              mb: '15px'
+            }}
+              onClick={SendAddress} >Fetch
+
+            </Button>
+            <NFTCard ethAddress={add || ''} />
           </Container>
         </Paper>
       </main>

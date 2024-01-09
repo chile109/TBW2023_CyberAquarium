@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import useNFT from "../hooks/useNFT";
 
 interface nftsData {
   id: number;
@@ -56,5 +57,20 @@ const Ball: React.FC<nftsData> = ({ image }) => {
   );
 };
 
+interface BouncingBallProps {
+  ethAddress: string;
+}
 
-export default Ball;
+const BouncingBall: React.FC<BouncingBallProps> = ({ ethAddress }) => {
+  const { nfts } = useNFT(ethAddress);
+  return (
+    <>
+      {nfts && nfts.map((nft: nftsData) => (
+        <Ball key={nft.id} image={nft.image_preview_url} id={0} />
+      ))}
+    </>
+  );
+};
+
+
+export default BouncingBall;
