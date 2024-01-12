@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
-
-interface IERC721 {
-    function safeTransferFrom(address from, address to, uint tokenId) external;
-    function transferFrom(address, address, uint) external;
-}
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
 contract EnglishAuction {
     event Bid(address indexed sender, uint amount);
@@ -34,7 +30,7 @@ contract EnglishAuction {
         initialBid = _startingBid;
     }
 
-    function bid() external payable {ƒ
+    function bid() external payable {
         if (highestBidder != address(0)) {
             require(block.timestamp < endAt, "ended");
             require(msg.value > highestBid, "value <= highest");
