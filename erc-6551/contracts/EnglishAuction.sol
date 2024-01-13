@@ -76,7 +76,7 @@ contract EnglishAuction {
         require(!ended, "ended");
 
         ended = true;
-        nft.safeTransferFrom(seller, highestBidder, nftId);
+        nft.safeTransferFrom(seller, highestBidder, uint256(nftId));
         seller.transfer(highestBid);
 
         emit End(highestBidder, highestBid);
