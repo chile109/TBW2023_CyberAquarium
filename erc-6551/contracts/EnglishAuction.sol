@@ -48,6 +48,7 @@ contract EnglishAuction {
 
     function withdraw() external {
         uint bal = bids[msg.sender];
+        require(bal > 0, "no balance");
         bids[msg.sender] = 0;
         payable(msg.sender).transfer(bal);
 
