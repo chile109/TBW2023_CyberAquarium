@@ -19,8 +19,8 @@ contract EnglishAuction {
     uint public initialBid;
     uint public highestBid;
     mapping(address => uint) public bids;
-    uint constant public auctionTime = 7 days;
-    uint constant public sellerPendingTime = 3 days;
+    uint public constant auctionTime = 7 days;
+    uint public constant sellerPendingTime = 3 days;
 
     constructor(address _nft, uint _nftId, uint _startingBid) {
         nft = IERC721(_nft);
@@ -35,7 +35,7 @@ contract EnglishAuction {
             require(block.timestamp < endAt, "ended");
             require(msg.value > highestBid, "value <= highest");
             bids[highestBidder] += highestBid;
-        }else{
+        } else {
             require(msg.value >= initialBid, "value < initialBid");
             endAt = block.timestamp + auctionTime;
         }
@@ -58,11 +58,14 @@ contract EnglishAuction {
     function overTimeWithdraw() external {
         require(!ended, "ended");
         require(msg.sender == highestBidder, "not highest bidder");
-        require(block.timestamp >= endAt + sellerPendingTime, "still pending seller action");
+        require(
+            block.timestamp >= endAt + sellerPendingTime,
+            "still pending seller action"
+        );
 
         uint bal = highestBid;
         payable(msg.sender).transfer(bal);
-        
+
         highestBid = 0;
         highestBidder = address(0);
 
@@ -80,5 +83,10 @@ contract EnglishAuction {
         seller.transfer(highestBid);
 
         emit End(highestBidder, highestBid);
+    }
+
+    function changeEndAt(uint _endAt) external {
+        require(msg.sender == seller, "not seller");
+        endAt = _endAt;
     }
 }

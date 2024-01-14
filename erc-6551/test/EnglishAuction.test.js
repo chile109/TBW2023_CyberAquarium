@@ -135,4 +135,12 @@ describe("EnglishAuction", function () {
     const ownerBalanceDiff = ownerBalanceAfter - ownerBalanceBefore;
     expect(ownerBalanceDiff).to.greaterThan(0);
   });
+
+  it("Should change endAt", async function () {
+    const newEndAt = Math.floor(Date.now() / 1000) + 3600; // Set new endAt time to 1 hour from now
+    await englishAuction.connect(owner).changeEndAt(newEndAt);
+
+    const endAt = await englishAuction.endAt();
+    expect(endAt).to.equal(newEndAt);
+  });
 });
