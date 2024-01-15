@@ -16,10 +16,12 @@
     "@mui/material": "^5.15.3",
     "@rainbow-me/rainbowkit": "^1.3.2",
     "@tokenbound/sdk": "^0.4.5",
+    "ethers": "^6.10.0",
     "get-image-colors": "^4.0.1",
     "next": "^13.4.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-ipfs-image": "^0.7.1",
     "viem": "~1.19.15",
     "wagmi": "~1.4.12"
   },
