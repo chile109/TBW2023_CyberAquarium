@@ -7,6 +7,7 @@ contract EnglishAuction {
     event Withdraw(address indexed bidder, uint amount);
     event OverTimeWithdraw(address indexed bidder, uint amount);
     event End(address winner, uint amount);
+    event Buy(address buyer, uint amount);
 
     IERC721 public nft;
     uint public nftId;
@@ -18,19 +19,25 @@ contract EnglishAuction {
     address public highestBidder;
     uint public initialBid;
     uint public highestBid;
+    uint public directBuyPrice;
     mapping(address => uint) public bids;
     uint public constant auctionTime = 7 days;
     uint public constant sellerPendingTime = 3 days;
 
-    constructor(address _nft, uint _nftId, uint _startingBid) {
+    constructor(address _nft, uint _nftId, uint _startingBid, uint _directBuyPrice) {
+        require(_directBuyPrice > _startingBid, "directBuyPrice <= startingBid");
+
         nft = IERC721(_nft);
         nftId = _nftId;
-
         seller = payable(msg.sender);
         initialBid = _startingBid;
+        directBuyPrice = _directBuyPrice;
     }
 
     function bid() external payable {
+        require(!ended, "ended");
+        require(msg.value < directBuyPrice, "use buy function");
+
         if (highestBidder != address(0)) {
             require(block.timestamp < endAt, "ended");
             require(msg.value > highestBid, "value <= highest");
@@ -65,11 +72,26 @@ contract EnglishAuction {
 
         uint bal = highestBid;
         payable(msg.sender).transfer(bal);
-
         highestBid = 0;
         highestBidder = address(0);
 
         emit OverTimeWithdraw(msg.sender, bal);
+    }
+
+    function buy() external payable {
+        require(msg.value >= directBuyPrice, "value < directBuyPrice");
+        require(!ended, "ended");
+
+        ended = true;
+        if(highestBidder != address(0)) {
+            bids[highestBidder] += highestBid;
+            highestBidder = msg.sender;
+            highestBid = msg.value;
+        }
+        nft.safeTransferFrom(seller, msg.sender, uint256(nftId));
+        seller.transfer(msg.value);
+
+        emit Buy(msg.sender, msg.value);
     }
 
     function end() external {

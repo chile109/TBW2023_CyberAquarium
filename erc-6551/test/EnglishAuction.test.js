@@ -21,7 +21,7 @@ describe("EnglishAuction", function () {
     expect(await nftContract.ownerOf(tokenId)).to.equal(owner.address);
 
     const EnglishAuctionFactory = await ethers.getContractFactory("EnglishAuction");
-    englishAuction = await EnglishAuctionFactory.deploy(nftContract.target, tokenId, ethers.parseEther("1"));
+    englishAuction = await EnglishAuctionFactory.deploy(nftContract.target, tokenId, ethers.parseEther("1"), ethers.parseEther("5"));
 
     await englishAuction.waitForDeployment();
   });
@@ -142,5 +142,31 @@ describe("EnglishAuction", function () {
 
     const endAt = await englishAuction.endAt();
     expect(endAt).to.equal(newEndAt);
+  });
+
+  it("Should allow a bidder to buy the NFT at the specified price", async function () {
+    const DirectBuyPrice = await englishAuction.directBuyPrice();
+    const bidderBalanceBefore = await ethers.provider.getBalance(bidder.address);
+    const ownerBalanceBefore = await ethers.provider.getBalance(owner.address);
+    await nftContract.approve(englishAuction, tokenId, { from: owner });
+    // Place a bid
+    await englishAuction.connect(bidder2).bid({ value: ethers.parseEther("2") });
+
+    // Buy the NFT
+    await englishAuction.connect(bidder).buy({ value: DirectBuyPrice });
+
+    await englishAuction.connect(bidder2).withdraw();
+
+    const highestBidder = await englishAuction.highestBidder();
+    const highestBid = await englishAuction.highestBid();
+    const ownerOfNFT = await nftContract.ownerOf(tokenId);
+    const bidderBalanceAfter = await ethers.provider.getBalance(bidder.address);
+    const ownerBalanceAfter = await ethers.provider.getBalance(owner.address);
+
+    expect(highestBidder).to.equal(bidder.address);
+    expect(highestBid).to.equal(DirectBuyPrice);
+    expect(ownerOfNFT).to.equal(bidder.address);
+    expect(bidderBalanceAfter).to.be.lessThan(bidderBalanceBefore - DirectBuyPrice);
+    expect(ownerBalanceAfter).to.be.greaterThan(ownerBalanceBefore);
   });
 });
