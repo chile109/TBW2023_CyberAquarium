@@ -18,11 +18,11 @@ const NFTCard = ({ ethAddress }: Props) => {
     <>
       <Grid container spacing={4}>
         {nfts && nfts.map((nft: nftsData) => (
-          <Grid item key={nft.image_original_url} xs={12} sm={6} md={4}>
+          <Grid item key={nft.image_original_url} xs={12} sm={6} md={2}>
             <Card
               sx={{
                 height: '100%', display: 'flex', flexDirection: 'column',
-                borderRadius: '50%', boxShadow: 5,
+                borderRadius: '100%', boxShadow: 5,
               }}
             >
               <CardMedia
