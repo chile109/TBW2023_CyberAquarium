@@ -28,7 +28,7 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <Image
-        src="/aquarium/aquarium-1.jpeg"
+        src="/aquarium/aquarium-10.jpeg"
         alt="bg"
         layout='fill'
         z-tabIndex={-99}
@@ -38,8 +38,15 @@ const Home: NextPage = () => {
         <Paper
           elevation={6}
           sx={{
-            padding: '20px',
-            borderRadius: '20px'
+            width: '45%', 
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            padding: '2rem',
+            background: 'linear-gradient(180deg, rgba(34, 36, 80, 0.9) 0%, rgba(23, 24, 38, 0.9) 100%)',
+            border: '3px solid #6DCDFF',
+            height: '80%',
           }}>
           <Image
             src='/logo-002.png'
@@ -54,11 +61,15 @@ const Home: NextPage = () => {
               <ConnectButton />
             </Grid>
             <TextField fullWidth label="type address" id="addInput"
+              color='secondary'
               sx={{
                 mb: '15px',
-                mt: '15px'
+                mt: '15px',
               }}
               value={addressInput}
+              inputProps={{
+                style: { color: 'white' },
+              }}
               onChange={(e: { target: { value: SetStateAction<string> } }) => {
                 if (e.target.value.toString().startsWith("0x")) {
                   setAddressInput(e.target.value);
@@ -71,6 +82,9 @@ const Home: NextPage = () => {
             >
               <Typography
                 display={'inline'}
+                sx={{
+                  color: 'white'
+                }}
               >
                 Example:
               </Typography>
@@ -78,7 +92,7 @@ const Home: NextPage = () => {
                 setAddressInput('0xd8FDf15e99b371214D6f1728C85f96635361978c');
               }}>address 1</Button>
               <Button onClick={() => {
-                setAddressInput('0x448C510Ada54D79701112e9aAf8F3d3Eab60CB48');
+                setAddressInput('0x51840Ea7B892145feaCB347Ab2ebaac9032A2140');
               }}>address 2</Button>
             </Box>
             <Button fullWidth variant="outlined" sx={{
