@@ -38,15 +38,15 @@ const Home: NextPage = () => {
         <Paper
           elevation={6}
           sx={{
-            width: '45%', 
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
+            width: '45%',
             padding: '2rem',
+            maxHeight: '80vh',
             background: 'linear-gradient(180deg, rgba(34, 36, 80, 0.9) 0%, rgba(23, 24, 38, 0.9) 100%)',
             border: '3px solid #6DCDFF',
-            height: '80%',
+            overflow: 'auto',
+            '&::-webkit-scrollbar': {
+              display: 'none'
+            },
           }}>
           <Image
             src='/logo-002.png'
