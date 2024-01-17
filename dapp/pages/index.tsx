@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import type { NextPage } from 'next';
 import Image from 'next/image'
@@ -11,6 +11,11 @@ import BouncingBall from '../components/BouncingBall';
 const Home: NextPage = () => {
   const [addressInput, setAddressInput] = useState('');
   const [add, setAdd] = useState('');
+  const [tbaAdd, setTbaAdd] = useState<number | undefined>();
+
+  useEffect(() => {
+    console.log(tbaAdd);
+  }, [tbaAdd])
 
   return (
     <div className={styles.container}>
@@ -102,7 +107,7 @@ const Home: NextPage = () => {
               color: 'white',
               mb: '1rem'
             }}>My Aquarium</Typography>
-            <NFTCard ethAddress={''} />
+            <NFTCard ethAddress={''} onTbaAddChange={setTbaAdd} />
           </Container>
         </Paper>
       </main>
