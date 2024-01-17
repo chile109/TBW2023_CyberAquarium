@@ -5,6 +5,7 @@ import Account from "./Account";
 import { parseUnits, getAddress } from "viem";
 import { useCallback, useEffect } from "react";
 import { useEthersSigner } from "../hooks/useEthersSigner";
+import WrapWalletLink from "./WrapWalletLink";
 import SidebarMenu from "./SidebarMenu";
 import AquariumBag from "./AquariumBag";
 
@@ -87,7 +88,7 @@ export default function RainbowkitTest() {
   return (
     <main className="...">
       <div className="...">
-        <div className="...">
+          <WrapWalletLink />
           <AquariumBag />
           <SidebarMenu />
           <h1>Ethers 5 Signer + RainbowKit + Vite</h1>
@@ -109,7 +110,6 @@ export default function RainbowkitTest() {
             </div>
           )}
         </div>
-      </div>
     </main>
   );
 }
