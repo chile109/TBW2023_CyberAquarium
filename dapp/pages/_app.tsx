@@ -6,6 +6,7 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import {
   mainnet,
   goerli,
+  sepolia
 
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
@@ -14,6 +15,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
     goerli,
+    sepolia,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
   ],
   [publicProvider()]

@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 
-const useNFT = (_address?: string) => {
+const useTba = (_address?: string) => {
   const { address } = useAccount();
   const addr = _address || address;
   const [nfts, setNfts] = useState([]);
-
   useEffect(() => {
     fetch(
-      `https://testnets-api.opensea.io/api/v1/assets?owner=${addr}&order_direction=desc&offset=0&limit=100&include_orders=false`,
-      // 0xd8FDf15e99b371214D6f1728C85f96635361978c
-      // 0x448C510Ada54D79701112e9aAf8F3d3Eab60CB48
+      `https://testnets-api.opensea.io/api/v2/chain/sepolia/account/${addr}/nfts?collection=testsea`,
       {
         method: "GET",
         headers: {
@@ -21,9 +18,9 @@ const useNFT = (_address?: string) => {
       }
     )
       .then((response) => response.json())
-      .then(({ assets }) => {
-        console.log(assets);
-        setNfts(assets);
+      .then((data) => {
+        console.log(data)
+        setNfts(data.nfts || []);
       })
       .catch((err) => {
         console.log(err);
@@ -33,4 +30,4 @@ const useNFT = (_address?: string) => {
   return { nfts };
 };
 
-export default useNFT;
+export default useTba;

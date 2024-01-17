@@ -5,13 +5,13 @@ import { type TBAccountParams } from "@tokenbound/sdk/dist/src";
 import { useState } from 'react';
 
 const DEFAULT_ACCOUNT: TBAccountParams = {
-  tokenContract: "0xe7134a029cd2fd55f678d6809e64d0b6a0caddcb",
-  tokenId: "9"
+  tokenContract: "0x6CcA2d398B2060DC824ba0Cdaf69a8e8344C329e",
+  tokenId: "1"
 }
 
 export default function TBA() {
   const { data: walletClient, isError, isLoading } = useWalletClient();
-  const tokenboundClient = new TokenboundClient({ signer: walletClient, chainId: 5 })
+  const tokenboundClient = new TokenboundClient({ signer: walletClient, chainId: 11155111 })
   const [retrievedAccount, setRetrievedAccount] = useState<string>("");
   const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT)
   const getAccount = () => {
