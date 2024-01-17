@@ -5,7 +5,7 @@ import Account from "./Account";
 import { parseUnits, getAddress } from "viem";
 import { useCallback, useEffect } from "react";
 import { useEthersSigner } from "../hooks/useEthersSigner";
-import SidebarFishShop from "./SidebarFishShop";
+import SidebarMenu from "./SidebarMenu";
 
 const sendingTBA = "0xa2221cc0f5012D60d0bF91B840A4Ef990D44Ae39"; // Sapienz #5 on Goerli w/ V3 contract
 const recipientAddress = getAddress(
@@ -87,7 +87,7 @@ export default function RainbowkitTest() {
     <main className="...">
       <div className="...">
         <div className="...">
-        <SidebarFishShop />
+        <SidebarMenu />
           <h1>Ethers 5 Signer + RainbowKit + Vite</h1>
           <ConnectButton />
           {isConnected && <Account />}
