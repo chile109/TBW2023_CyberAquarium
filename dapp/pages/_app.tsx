@@ -2,7 +2,7 @@ import '../styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
-import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi';
 import {
   mainnet,
   goerli,
@@ -14,7 +14,8 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
     goerli,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
+    sepolia,
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   [publicProvider()]
 );
