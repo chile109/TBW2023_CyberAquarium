@@ -1,11 +1,3 @@
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-}
-
 a {
   color: inherit;
   text-decoration: none;
@@ -14,3 +6,565 @@ a {
 * {
   box-sizing: border-box;
 }
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: "微軟正黑體", Arial, Helvetica, sans-serif;
+  background-color: #000;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  width: 100%;
+  height: 100%;
+  min-width: 280px;
+  overflow: hidden;
+}
+
+.sidebarFish-fishBox-list-row-item-num, .sidebar-box-list-btn-icon-blue, .sidebar-box-list-btn-blue, .sidebar-box-list-item-edit-input-icon, .sidebar-box-list-item-edit-input, .sidebar-box-list-item-text-blue, .sidebar-box-list-item-text-icon, .wrap-wallet-text, .wrap-wallet-link-icon, .wrap-logo-btn {
+  color: #6DCDFF !important;
+}
+
+.sidebar-box-list-btn-icon, .sidebar-box-list-btn, .sidebar-box-list-item-title {
+  color: #F7178B;
+}
+
+.sidebarFish-fishBox-list-row-item, .sidebar-box-list-btn-blue, .wrap-logo-btn {
+  border: 1px solid #6DCDFF !important;
+}
+
+.sidebar-box-list-btn {
+  border: 1px solid #F7178B;
+}
+
+.sidebarFishShop-fishBox, .sidebarFish-fishBox, .sidebar-box {
+  background: linear-gradient(180deg, rgba(34, 36, 80, 0.8) 0%, rgba(23, 24, 38, 0.8) 100%);
+}
+
+.sidebar-box-list-item-buy-text, .wrap-submit {
+  background-color: #3b5efd;
+}
+
+.sidebar-box-list-btn:hover {
+  background-color: #F7178B;
+}
+
+.sidebar-box-list-btn-blue:hover, .wrap-logo-btn:hover {
+  background-color: #6DCDFF !important;
+}
+
+.bgset {
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wrap {
+  width: 100%;
+  height: 100%;
+  background-image: url(../img/bg-A.jpg);
+  background-size: cover;
+}
+.wrapB {
+  background-image: url(../img/bg-B.jpg);
+}
+.wrap-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+.wrap-login-w70 {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2rem;
+  background: linear-gradient(180deg, rgba(34, 36, 80, 0.9) 0%, rgba(23, 24, 38, 0.9) 100%);
+  border-radius: 1rem;
+  border: 3px solid #6DCDFF;
+  height: 80%;
+  border-radius: 1rem;
+}
+.wrap-login-input {
+  width: 100%;
+  border: solid 0.1px #fff;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0);
+  outline: none;
+  height: 2rem;
+  color: #fff;
+}
+.wrap-login-tip {
+  width: 100%;
+  font-size: 0.7rem;
+  color: #ff2a2a;
+  text-align: left;
+}
+.wrap-login-list {
+  width: 100%;
+  height: 50vh;
+  overflow-y: scroll;
+  display: block;
+}
+.wrap-login-list-fish {
+  width: 25%;
+  height: 5rem;
+  margin: 1rem;
+  float: left;
+  background-image: url(../img/fish.png);
+  background-size: contain;
+  margin: 1rem auto;
+}
+.wrap-logo {
+  width: 100%;
+  height: 6rem;
+  background-image: url(../img/logo.png);
+  background-size: contain;
+}
+.wrap-logo-btn {
+  width: 100%;
+  height: 2.2rem;
+  text-align: center;
+  border-radius: 3rem;
+  margin: 1rem 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+.wrap-logo-btn:hover {
+  color: #fff !important;
+}
+.wrap-submit {
+  width: 100%;
+  height: 2rem;
+  font-weight: 600;
+  border: 0;
+  margin: 1rem 0;
+  color: #fff;
+  border-radius: 5px;
+}
+.wrap-submit:hover {
+  background-color: #3b5efd;
+}
+.wrap-wallet-link {
+  background-image: url(../img/inputBg.png);
+  width: 8.5rem;
+  background-size: contain;
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  left: 2rem;
+  top: 1.5rem;
+  justify-content: center;
+}
+.wrap-wallet-link-icon {
+  width: 1rem;
+  height: 1rem;
+}
+.wrap-wallet-text {
+  font-size: 0.8rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 5.5rem;
+}
+
+.sidebar {
+  width: 200px;
+  height: 10rem;
+  position: absolute;
+  top: 30%;
+  left: 30%;
+  z-index: 1800;
+  background-image: url(../img/fish.png);
+  background-size: contain;
+}
+.sidebar-inputSide {
+  display: none;
+}
+.sidebar-box {
+  width: 300px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 2000;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  display: none;
+}
+.sidebar-box-close {
+  width: 2rem;
+  height: 2rem;
+  z-index: 2100;
+  position: absolute;
+  right: 1rem;
+  display: none;
+}
+.sidebar-box-close-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  top: 2rem;
+  right: 236px;
+}
+.sidebar-box-list {
+  width: 80%;
+  margin: 0 auto;
+  height: calc(100% - 5rem);
+  overflow: scroll;
+  margin-top: 5rem;
+}
+.sidebar-box-list-photo {
+  margin-top: 5rem;
+  background-image: url(../img/fish.png);
+  background-size: contain;
+  width: 100%;
+  height: 7rem;
+}
+.sidebar-box-list-item {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+.sidebar-box-list-item-title {
+  font-size: 1rem;
+  margin: 5px 0;
+}
+.sidebar-box-list-item-text {
+  font-size: 0.8rem;
+}
+.sidebar-box-list-item-text-icon {
+  width: 1rem;
+  height: 1rem;
+  float: right;
+}
+.sidebar-box-list-item-text-right {
+  float: right;
+}
+.sidebar-box-list-item-edit {
+  position: relative;
+}
+.sidebar-box-list-item-edit-input {
+  border: 0;
+  background: rgba(0, 0, 0, 0);
+  border-bottom: 1px solid #fff;
+  width: 100%;
+  height: 2rem;
+  outline: none;
+}
+.sidebar-box-list-item-edit-input-icon {
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  width: 1rem;
+  height: 1rem;
+}
+.sidebar-box-list-item-edit-rowline {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 1rem;
+}
+.sidebar-box-list-item-edit-rowline-text {
+  font-size: 0.7rem;
+  margin: 0 8px;
+}
+.sidebar-box-list-item-buy-text {
+  text-align: center;
+  height: 1.5rem;
+  border-radius: 2rem;
+  font-size: 0.7rem;
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidebar-box-list-item-buy-text-icon {
+  width: 0.8rem;
+  height: 0.8rem;
+  margin-right: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidebar-box-list-item-buy-lgNum {
+  text-align: center;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidebar-box-list-item-buy-lgNum-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 1rem;
+  cursor: pointer;
+}
+.sidebar-box-list-btn {
+  cursor: pointer;
+  width: 100%;
+  height: 2rem;
+  border-radius: 2rem;
+  background-color: rgba(0, 0, 0, 0);
+  margin: 0.5rem 0;
+}
+.sidebar-box-list-btn:hover {
+  color: #fff;
+}
+.sidebar-box-list-btn:hover .sidebar-box-list-btn-icon {
+  color: #fff;
+}
+.sidebar-box-list-btn-blue:hover {
+  color: #fff !important;
+}
+.sidebar-box-list-btn-blue:hover .sidebar-box-list-btn-icon-blue {
+  color: #fff !important;
+}
+.sidebar-box-list-btn-gray {
+  color: #888;
+  border: 1px solid #888;
+}
+.sidebar-box-list-btn-gray:hover {
+  background-color: #888;
+  color: #fff !important;
+}
+.sidebar-box-list-btn-gray:hover .sidebar-box-list-btn-icon-gray {
+  color: #fff !important;
+}
+.sidebar-box-list-btn-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+.sidebar-box-list-btn-icon-gray {
+  color: #888;
+}
+
+.sidebarFish {
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  top: 1.5rem;
+  right: 6rem;
+  z-index: 1900;
+  background-image: url(../img/btnBg.png);
+  background-size: cover;
+}
+.sidebarFish-fishBox {
+  width: 300px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+}
+.sidebarFish-fishBox-list {
+  width: 80%;
+  margin: 0 auto;
+  height: calc(100% - 5rem);
+  overflow: scroll;
+  margin-top: 5rem;
+}
+.sidebarFish-fishBox-list-row {
+  flex-direction: row;
+  display: flex;
+  width: 100%;
+}
+.sidebarFish-fishBox-list-row-item {
+  width: calc(50% - 1rem);
+  background-image: url(../img/fish.png);
+  background-size: contain;
+  height: 7rem;
+  border-radius: 6px;
+  margin: 0.5rem;
+}
+.sidebarFish-fishBox-list-row-item-num {
+  font-size: 0.7rem;
+  text-align: center;
+  width: 100%;
+  padding-top: calc(100% - 0.8rem);
+}
+.sidebarFish-close {
+  width: 2rem;
+  height: 2rem;
+  z-index: 2100;
+  position: absolute;
+  right: 1rem;
+  display: none;
+}
+.sidebarFish-close-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  top: 2rem;
+  right: 236px;
+}
+
+.sidebarFishShop {
+  width: 3rem;
+  height: 3rem;
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  z-index: 1900;
+  background-image: url(../img/btnBg-shop.png);
+  background-size: cover;
+}
+.sidebarFishShop-fishBox {
+  width: 300px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 2000;
+  display: none;
+}
+.sidebarFishShop-fishBox-list {
+  width: 80%;
+  margin: 0 auto;
+  height: calc(100% - 5rem);
+  overflow: scroll;
+  margin-top: 5rem;
+}
+.sidebarFishShop-close {
+  width: 2rem;
+  height: 2rem;
+  z-index: 2100;
+  position: absolute;
+  right: 1rem;
+  display: none;
+}
+.sidebarFishShop-close-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  position: absolute;
+  top: 2rem;
+  right: 236px;
+}
+
+#side:checked ~ .sidebar-box, #side-fish:checked ~ .sidebarFish-fishBox, #side-fishShop:checked ~ .sidebarFishShop-fishBox, #side:checked ~ .sidebar-box-close, #side-fish:checked ~ .sidebarFish-close, #side-fishShop:checked ~ .sidebarFishShop-close {
+  animation-name: xmove;
+  animation-duration: 1s;
+  display: block;
+}
+
+@keyframes xmove {
+  from {
+    transform: translateX(300px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
+.container {
+  margin: 0 auto;
+}
+
+.countdown-timer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.sheet {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  left: 0;
+  top: 0;
+  right: 0;
+  background-color: var(--Very_dark_blue);
+  opacity: 0.35;
+}
+
+.flip {
+  transition: transform 1s;
+  transform: translate(0%, 100%) scaleY(-1);
+}
+
+.primary {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.sub-heading {
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.bottom {
+  align-self: end;
+  margin-bottom: 4em;
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
+
+.social-icon {
+  cursor: pointer;
+}
+
+.social-icon:hover {
+  filter: brightness(0) saturate(100%) invert(54%) sepia(7%) saturate(5054%) hue-rotate(297deg) brightness(99%) contrast(99%);
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: rgba(113, 160, 207, 0.5) rgba(0, 0, 0, 0);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 0;
+}
+
+@media (max-width: 992px) {
+  .wrap-login {
+    width: 50%;
+  }
+  .wrap-login-list-fish {
+    width: 33.3%;
+  }
+  .wrap-login-w70 {
+    width: 70%;
+  }
+}
+@media (max-width: 768px) {
+  .wrap-login {
+    width: 70%;
+  }
+}
+@media (max-width: 576px) {
+  .wrap {
+    min-height: 7rem;
+  }
+  .wrap-logo {
+    height: 6rem;
+  }
+  .wrap-logo-btn {
+    margin: 0.5rem 0;
+  }
+  .wrap-login {
+    width: 90%;
+  }
+  .wrap-login-list-fish {
+    width: 50%;
+  }
+}
+@media (max-height: 750px) {
+  .wrap-logo {
+    height: 3rem;
+  }
+}/*# sourceMappingURL=main.css.map */
