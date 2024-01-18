@@ -14,13 +14,11 @@ interface nftsData {
 }
 
 const NFTCard = ({ ethAddress, onTbaAddChange }: Props) => {
-  const [tbaAdd, setTbaAdd] = useState<number>();
   const { nfts } = useTba(ethAddress);
 
   useEffect(() => {
-    console.log(tbaAdd)
     console.log(nfts);
-  }, [tbaAdd, nfts]);
+  }, [nfts]);
 
   return (
     <>
@@ -38,7 +36,6 @@ const NFTCard = ({ ethAddress, onTbaAddChange }: Props) => {
               >
                 <CardMedia
                   onClick={() => {
-                    setTbaAdd(nft.identifier);
                     onTbaAddChange(nft.identifier);
                   }}
                   component="div"
