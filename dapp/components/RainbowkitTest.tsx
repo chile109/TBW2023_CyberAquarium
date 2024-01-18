@@ -90,7 +90,7 @@ export default function RainbowkitTest() {
       <div className="...">
           <WrapWalletLink />
           <AquariumBag />
-          <SidebarMenu />
+          <SidebarMenu signer={signer} />
           <h1>Ethers 5 Signer + RainbowKit + Vite</h1>
           <ConnectButton />
           {isConnected && <Account />}
