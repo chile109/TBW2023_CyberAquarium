@@ -1,14 +1,57 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import SellerAuctionPanel from './SellerAuctionPanel';
 import SellerConfirmPanel from './SellerConfirmPanel';
 import SellerDealLPanel from './SellerDealPanel';
 import BuyerBidPanel from './BuyerBidPanel';
+import { ethers } from 'ethers';
+import EnglishAuctionArtifact from '../../erc-6551/artifacts/contracts/EnglishAuction.sol/EnglishAuction.json'; 
 
-const SidebarMenu = () => {
+interface Props {
+  signer: ethers.providers.JsonRpcSigner | undefined;
+}
+
+const SidebarMenu = ({signer}:Props ) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [auctionContract, setAuctionContract] = useState( {} as ethers.Contract);
+  const [auctionAddress, setAuctionAddress] = useState("");
 
   const handleClick = () => {
     setIsOpen(!isOpen);
+  };
+
+  const deployContract = async () => {
+    try {
+      const EnglishAuctionFactory = new ethers.ContractFactory(
+        EnglishAuctionArtifact.abi,
+        EnglishAuctionArtifact.bytecode,
+        signer
+      );
+
+      const nftContractTarget = '0xAE9eb972D43eCaEC22eF02Afb1f856cF61f7F9F8';
+      const tokenId = 1;
+      const startingBid = ethers.utils.parseEther("0.1");
+      const reservePrice = ethers.utils.parseEther("3");
+
+      // 部署合约
+      const deployedContract = await EnglishAuctionFactory.deploy(
+        nftContractTarget,
+        tokenId,
+        startingBid,
+        reservePrice
+      );
+
+      // 在测试链上等待部署完成
+      await deployedContract.deployed();
+
+      const newContractAddress = deployedContract.address;
+
+      console.log("Contract deployed to:", newContractAddress);
+
+      setAuctionContract(deployedContract);
+      setAuctionAddress(newContractAddress);
+    } catch (error) {
+      console.error("Error deploying contract:", error);
+    }
   };
 
   return (
@@ -33,10 +76,10 @@ const SidebarMenu = () => {
         </svg>
       </label>
 
-      {/* <SellerAuctionPanel />
-      <SellerConfirmPanel />
-      <SellerDealLPanel /> */}
-      <BuyerBidPanel />
+      <SellerAuctionPanel deployAuction ={ deployContract }/>
+      {/* <SellerConfirmPanel />
+      <SellerDealLPanel />
+      <BuyerBidPanel /> */}
     </div>
   );
 };
