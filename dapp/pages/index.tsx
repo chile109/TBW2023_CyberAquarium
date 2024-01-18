@@ -7,15 +7,49 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Container, Paper, TextField, Button, Typography, Grid, Box, colors } from '@mui/material';
 import NFTCard from '../components/NFTCard';
 import BouncingBall from '../components/BouncingBall';
+import { useWalletClient } from 'wagmi'
+import { TokenboundClient } from '@tokenbound/sdk'
+import { type TBAccountParams } from "@tokenbound/sdk/dist/src";
+
+const DEFAULT_ACCOUNT: TBAccountParams = {
+  tokenContract: "0x",
+  tokenId: ""
+}
 
 const Home: NextPage = () => {
-  const [addressInput, setAddressInput] = useState('');
+  const [addressInput, setAddressInput] = useState<string>('');
   const [add, setAdd] = useState('');
-  const [tbaAdd, setTbaAdd] = useState<number | undefined>();
+  const [tbaTokenId, setTbaTokenId] = useState<number>(0);
+  const { data: walletClient, isError, isLoading } = useWalletClient();
+  const tokenboundClient = new TokenboundClient({ signer: walletClient, chainId: 11155111 })
+  const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT)
 
   useEffect(() => {
-    console.log(tbaAdd);
-  }, [tbaAdd])
+    console.log(tbaTokenId);
+    const myString: string = tbaTokenId.toString();
+    const getAccount = async () => {
+      setTBAccount({
+        tokenContract: "0x6CcA2d398B2060DC824ba0Cdaf69a8e8344C329e",
+        tokenId: myString,
+      });
+    };
+    getAccount();
+  }, [tbaTokenId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const account = tokenboundClient.getAccount(TBAccount);
+        setAddressInput(account);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (TBAccount) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TBAccount]);
 
   return (
     <div className={styles.container}>
@@ -107,7 +141,7 @@ const Home: NextPage = () => {
               color: 'white',
               mb: '1rem'
             }}>My Aquarium</Typography>
-            <NFTCard ethAddress={''} onTbaAddChange={setTbaAdd} />
+            <NFTCard ethAddress={''} onTbaAddChange={setTbaTokenId} />
           </Container>
         </Paper>
       </main>

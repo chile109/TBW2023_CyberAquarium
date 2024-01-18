@@ -1,10 +1,10 @@
 import { Grid, Card, CardMedia, CardActionArea } from '@mui/material';
 import useTba from "../hooks/useTba";
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 interface Props {
   ethAddress: string;
-  onTbaAddChange: (tbaAdd: number | undefined) => void;
+  onTbaAddChange: (tbaAdd: number) => void;
 }
 interface nftsData {
   identifier: number;
