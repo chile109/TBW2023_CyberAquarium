@@ -19,18 +19,18 @@ const SidebarMenu = ({signer}:Props ) => {
     setIsOpen(!isOpen);
   };
 
-  const deployContract = async () => {
+  const deployContract = async (
+    nftContractTarget: string,
+    tokenId: number,
+    startingBid: ethers.BigNumber,
+    reservePrice: ethers.BigNumber
+  ) => {
     try {
       const EnglishAuctionFactory = new ethers.ContractFactory(
         EnglishAuctionArtifact.abi,
         EnglishAuctionArtifact.bytecode,
         signer
       );
-
-      const nftContractTarget = '0xAE9eb972D43eCaEC22eF02Afb1f856cF61f7F9F8';
-      const tokenId = 1;
-      const startingBid = ethers.utils.parseEther("0.1");
-      const reservePrice = ethers.utils.parseEther("3");
 
       // 部署合约
       const deployedContract = await EnglishAuctionFactory.deploy(
