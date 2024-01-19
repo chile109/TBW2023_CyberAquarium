@@ -23,15 +23,29 @@ const Home: NextPage = () => {
   const chain = 'sepolia'
   const identifier = 1
   const _address = '0x6CcA2d398B2060DC824ba0Cdaf69a8e8344C329e'
-  const fishAddress = '0x51840Ea7B892145feaCB347Ab2ebaac9032A2140'
-  const { nfts } = useGetNFT(chain, identifier, _address)
   const [isOpen, setIsOpen] = useState(true);
   const [addressInput, setAddressInput] = useState<string>('');
-  const [add, setAdd] = useState('');
   const [tbaTokenId, setTbaTokenId] = useState<number>(0);
   const { data: walletClient, isError, isLoading } = useWalletClient();
   const tokenboundClient = new TokenboundClient({ signer: walletClient, chainId: 11155111 })
   const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT)
+  const [imgUrl, setImgUrl] = useState('')
+  const { nfts } = useGetNFT(chain, identifier, _address)
+
+  useEffect(() => {
+    fetch(
+      `https://testnets-api.opensea.io/api/v2/chain/${chain}/contract/${_address}/nfts/${tbaTokenId}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data)
+        setImgUrl(data.nft.image_url);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tbaTokenId]);
 
   useEffect(() => {
     console.log(tbaTokenId);
@@ -75,10 +89,13 @@ const Home: NextPage = () => {
         />
         <link href="/favicon.ico" rel="icon" />
       </Head>
-      <Image src={nfts.image_url as any} alt={''}
+      {imgUrl ? (<Image src={imgUrl} alt={''}
         layout='fill'
         style={{ zIndex: -99, }}
-      ></Image>
+      ></Image>) : (<Image src={'/aquarium/aquarium-1.jpeg'} alt={''}
+        layout='fill'
+        style={{ zIndex: -99, }}
+      ></Image>)}
       <div className="...">
         <div onClick={() => setIsOpen(!isOpen)}>
           <WrapWalletLink />
