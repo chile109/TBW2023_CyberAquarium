@@ -1,18 +1,19 @@
-import React, {useEffect, useState } from 'react';
-import SellerAuctionPanel from './SellerAuctionPanel';
-import SellerConfirmPanel from './SellerConfirmPanel';
-import SellerDealLPanel from './SellerDealPanel';
-import BuyerBidPanel from './BuyerBidPanel';
-import { ethers } from 'ethers';
-import EnglishAuctionArtifact from '../Contact/EnglishAuction.json'; 
+import React, { useEffect, useState } from "react";
+import SellerAuctionPanel from "./SellerAuctionPanel";
+import SellerConfirmPanel from "./SellerConfirmPanel";
+import SellerDealLPanel from "./SellerDealPanel";
+import BuyerBidPanel from "./BuyerBidPanel";
+import { Contract, Signer, Wallet, ethers, providers } from "ethers";
+import EnglishAuctionArtifact from "../Contact/EnglishAuction.json";
+import { useContractWrite } from 'wagmi';
 
 interface Props {
   signer: ethers.providers.JsonRpcSigner | undefined;
 }
 
-const SidebarMenu = ({signer}:Props ) => {
+const SidebarMenu = ({ signer }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [auctionContract, setAuctionContract] = useState( {} as ethers.Contract);
+  const [auctionContract, setAuctionContract] = useState({} as ethers.Contract);
   const [auctionAddress, setAuctionAddress] = useState("");
 
   const handleClick = () => {
@@ -63,8 +64,7 @@ const SidebarMenu = ({signer}:Props ) => {
         checked={isOpen}
         onChange={handleClick}
       />
-      <label htmlFor="side-fishShop" className="sidebarFishShop bgset">
-      </label>
+      <label htmlFor="side-fishShop" className="sidebarFishShop bgset"></label>
       <label htmlFor="side-fishShop" className="sidebarFishShop-close">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -76,10 +76,10 @@ const SidebarMenu = ({signer}:Props ) => {
         </svg>
       </label>
 
-      <SellerAuctionPanel deployAuction ={ deployContract }/>
-      {/* <SellerConfirmPanel />
+      {/* <SellerAuctionPanel deployAuction={deployContract} /> */}
+      {/* <SellerConfirmPanel  /> */}
       <SellerDealLPanel />
-      <BuyerBidPanel /> */}
+      {/* <BuyerBidPanel /> */}
     </div>
   );
 };

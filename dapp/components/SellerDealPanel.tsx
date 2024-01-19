@@ -1,6 +1,16 @@
 import React from "react";
+import { useContractWrite } from 'wagmi';
+import EnglishAuctionArtifact from "../Contact/EnglishAuction.json";
+
 
 const SellerDealLPanel = () => {
+
+  const { data, isLoading, isSuccess, write } = useContractWrite({
+    address: '0x345FDDD623944ACDa874342411ceFfe73C093AD6',
+    abi: EnglishAuctionArtifact.abi,
+    functionName: 'end',
+  })
+
   return (
     <div className="sidebarFishShop-fishBox">
       <div className="sidebarFish-fishBox-list">
@@ -146,7 +156,7 @@ const SellerDealLPanel = () => {
             </div>
           </div>
         </div>
-        <button className="sidebar-box-list-btn">
+        <button onClick={() => write()} className="sidebar-box-list-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
@@ -158,7 +168,7 @@ const SellerDealLPanel = () => {
           </svg>
           交易成立
         </button>
-        <button className="sidebar-box-list-btn sidebar-box-list-btn-gray">
+        {/* <button onClick={onDealClick} className="sidebar-box-list-btn sidebar-box-list-btn-gray">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
@@ -169,7 +179,7 @@ const SellerDealLPanel = () => {
             <path d="M5.5 5a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1m0 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M1 7.086a1 1 0 0 0 .293.707L8.75 15.25l-.043.043a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 0 7.586V3a1 1 0 0 1 1-1z" />
           </svg>
           取消交易
-        </button>
+        </button> */}
       </div>
     </div>
   );
