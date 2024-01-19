@@ -1,16 +1,11 @@
 import { Grid, Card, CardMedia, CardActionArea } from '@mui/material';
 import useTba from "../hooks/useTba";
 import { useEffect } from 'react';
+import { nftsData } from '../types/ensDataType';
 
 interface Props {
   ethAddress: string;
   onTbaAddChange: (tbaAdd: number) => void;
-}
-interface nftsData {
-  identifier: number;
-  image_original_url?: string;
-  image_preview_url?: string;
-  image_url?: string;
 }
 
 const NFTCard = ({ ethAddress, onTbaAddChange }: Props) => {
