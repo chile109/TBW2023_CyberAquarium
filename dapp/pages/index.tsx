@@ -1,20 +1,55 @@
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import styles from '../styles/Home.module.css';
 import type { NextPage } from 'next';
 import Image from 'next/image'
 import Head from 'next/head';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Container, Paper, TextField, Button, Typography, Grid, Box } from '@mui/material';
+import { Container, Paper, TextField, Button, Typography, Grid, Box, colors } from '@mui/material';
 import NFTCard from '../components/NFTCard';
 import BouncingBall from '../components/BouncingBall';
+import { useWalletClient } from 'wagmi'
+import { TokenboundClient } from '@tokenbound/sdk'
+import { type TBAccountParams } from "@tokenbound/sdk/dist/src";
+
+const DEFAULT_ACCOUNT: TBAccountParams = {
+  tokenContract: "0x",
+  tokenId: ""
+}
 
 const Home: NextPage = () => {
-  const [addressInput, setAddressInput] = useState('');
+  const [addressInput, setAddressInput] = useState<string>('');
   const [add, setAdd] = useState('');
+  const [tbaTokenId, setTbaTokenId] = useState<number>(0);
+  const { data: walletClient, isError, isLoading } = useWalletClient();
+  const tokenboundClient = new TokenboundClient({ signer: walletClient, chainId: 11155111 })
+  const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT)
 
-  const SendAddress = () => {
-    setAdd(addressInput);
-  };
+  useEffect(() => {
+    console.log(tbaTokenId);
+    const myString: string = tbaTokenId.toString();
+    const getAccount = async () => {
+      setTBAccount({
+        tokenContract: "0x6CcA2d398B2060DC824ba0Cdaf69a8e8344C329e",
+        tokenId: myString,
+      });
+    };
+    getAccount();
+  }, [tbaTokenId]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const account = tokenboundClient.getAccount(TBAccount);
+        setAddressInput(account);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    if (TBAccount) {
+      fetchData();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [TBAccount]);
 
   return (
     <div className={styles.container}>
@@ -31,7 +66,7 @@ const Home: NextPage = () => {
         src="/aquarium/aquarium-10.jpeg"
         alt="bg"
         layout='fill'
-        z-tabIndex={-99}
+        z-tabindex={-99}
         style={{ position: 'absolute', zIndex: -2 }}
       />
       <main className={styles.main}>
@@ -43,6 +78,7 @@ const Home: NextPage = () => {
             maxHeight: '80vh',
             background: 'linear-gradient(180deg, rgba(34, 36, 80, 0.9) 0%, rgba(23, 24, 38, 0.9) 100%)',
             border: '3px solid #6DCDFF',
+            borderRadius: '1rem',
             overflow: 'auto',
             '&::-webkit-scrollbar': {
               display: 'none'
@@ -60,7 +96,8 @@ const Home: NextPage = () => {
             <Grid container justifyContent="center" alignItems="center">
               <ConnectButton />
             </Grid>
-            <TextField fullWidth label="type address" id="addInput"
+            <TextField fullWidth label="Type TBA address" id="addInput"
+              InputLabelProps={{ style: { color: 'white' } }}
               color='secondary'
               sx={{
                 mb: '15px',
@@ -98,9 +135,13 @@ const Home: NextPage = () => {
             <Button fullWidth variant="outlined" sx={{
               mb: '15px'
             }}
-              onClick={SendAddress} >Fetch
+              onClick={() => setAdd(addressInput)} >Fetch fish
             </Button>
-            <NFTCard ethAddress={add || ''} />
+            <Typography variant='h3' align='center' sx={{
+              color: 'white',
+              mb: '1rem'
+            }}>My Aquarium</Typography>
+            <NFTCard ethAddress={''} onTbaAddChange={setTbaTokenId} />
           </Container>
         </Paper>
       </main>

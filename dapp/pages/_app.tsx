@@ -6,7 +6,6 @@ import { configureChains, createConfig, sepolia, WagmiConfig } from 'wagmi';
 import {
   mainnet,
   goerli,
-
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 

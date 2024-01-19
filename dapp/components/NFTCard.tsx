@@ -1,24 +1,25 @@
-
-import { Typography, Box, Grid, Avatar, Card, CardMedia } from '@mui/material';
-import useNFT from "../hooks/useNFT";
+import { Grid, Card, CardMedia, CardActionArea } from '@mui/material';
+import useTba from "../hooks/useTba";
+import { useEffect } from 'react';
+import { nftsData } from '../types/ensDataType';
 
 interface Props {
   ethAddress: string;
-}
-interface nftsData {
-  id: number;
-  image_original_url?: string;
-  image_preview_url?: string;
-  image_url?: string;
+  onTbaAddChange: (tbaAdd: number) => void;
 }
 
-const NFTCard = ({ ethAddress }: Props) => {
-  const { nfts } = useNFT(ethAddress);
+const NFTCard = ({ ethAddress, onTbaAddChange }: Props) => {
+  const { nfts } = useTba(ethAddress);
+
+  useEffect(() => {
+    console.log(nfts);
+  }, [nfts]);
+
   return (
     <>
       <Grid container spacing={4}>
         {nfts && nfts.map((nft: nftsData) => (
-          <Grid item key={nft.image_original_url} xs={12} sm={6} md={4}
+          <Grid item key={nft.identifier} xs={12} sm={6} md={3}
           >
             <Card
               sx={{
@@ -26,14 +27,20 @@ const NFTCard = ({ ethAddress }: Props) => {
                 borderRadius: '50%', boxShadow: 5,
               }}
             >
-              <CardMedia
-                component="div"
-                sx={{
-                  // 16:9
-                  pt: '100%',
-                }}
-                image={nft.image_preview_url || ''}
-              />
+              <CardActionArea
+              >
+                <CardMedia
+                  onClick={() => {
+                    onTbaAddChange(nft.identifier);
+                  }}
+                  component="div"
+                  sx={{
+                    // 16:9
+                    pt: '100%',
+                  }}
+                  image={nft.image_url || ''}
+                />
+              </CardActionArea>
             </Card>
           </Grid>
         ))}

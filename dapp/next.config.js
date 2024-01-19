@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['i.seadn.io'],
+    domains: ['assets.manifold.xyz']
   },
   webpack: config => {
     config.resolve.fallback = { fs: false, net: false, tls: false };
