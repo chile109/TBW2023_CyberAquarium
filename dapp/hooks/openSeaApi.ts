@@ -5,7 +5,7 @@ type nftsData = {
   image_url: string;
 }
 
-export const useGetNFT = (chain: string,identifier: string,address?: string) => {
+export const useGetNFT = (chain: string,identifier: number,address?: string) => {
   const [nfts, setNfts] = useState<nftsData>();
   useEffect(() => {
     fetch(
