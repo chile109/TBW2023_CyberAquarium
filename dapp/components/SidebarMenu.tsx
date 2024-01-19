@@ -78,8 +78,8 @@ const SidebarMenu = ({ signer }: Props) => {
 
       {/* <SellerAuctionPanel deployAuction={deployContract} /> */}
       {/* <SellerConfirmPanel  /> */}
-      <SellerDealLPanel />
-      {/* <BuyerBidPanel /> */}
+      {/* <SellerDealLPanel /> */}
+      <BuyerBidPanel bidValue="2" />
     </div>
   );
 };
