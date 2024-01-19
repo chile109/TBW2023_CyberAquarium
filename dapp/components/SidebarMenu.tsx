@@ -4,7 +4,7 @@ import SellerConfirmPanel from './SellerConfirmPanel';
 import SellerDealLPanel from './SellerDealPanel';
 import BuyerBidPanel from './BuyerBidPanel';
 import { ethers } from 'ethers';
-import EnglishAuctionArtifact from '../../erc-6551/artifacts/contracts/EnglishAuction.sol/EnglishAuction.json'; 
+import EnglishAuctionArtifact from '../Contact/EnglishAuction.json'; 
 
 interface Props {
   signer: ethers.providers.JsonRpcSigner | undefined;
