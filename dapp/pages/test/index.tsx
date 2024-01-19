@@ -1,10 +1,13 @@
-import TBA from '../../components/Tba'
-import RainbowkitTest from '../../components/RainbowkitTest'
+import MainAquarium from '../../components/MainAquarium';
+import useIsMounted from '../../hooks/useIsMounted';
 
 export default function Page() {
+  const mounted = useIsMounted();
   return (
     <div>
-      <RainbowkitTest />
+      {mounted ?
+        <MainAquarium />
+        : null}
     </div>
   )
 }
