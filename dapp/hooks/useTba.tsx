@@ -7,16 +7,7 @@ const useTba = (_address?: string) => {
   const [nfts, setNfts] = useState([]);
   useEffect(() => {
     fetch(
-      `https://testnets-api.opensea.io/api/v2/chain/sepolia/account/${addr}/nfts?collection=testsea`,
-      {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-          "X-API-KEY": "369d126c15054a758f5be55651e5a04a",
-        },
-        // mode: "no-cors",
-      }
-    )
+      `https://testnets-api.opensea.io/api/v2/chain/sepolia/account/${addr}/nfts?collection=testsea`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data)
