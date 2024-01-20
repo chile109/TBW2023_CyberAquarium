@@ -1,62 +1,77 @@
 import React from "react";
+import { useContractRead } from "wagmi";
+import EnglishAuctionArtifact from "../Contact/EnglishAuction.json";
+import CountdownTimer from "./CountdownTimer";
+import { ethers } from "ethers";
 
 const SellerConfirmPanel = () => {
+  // const signer = useEthersSigner({ chainId: 11155111 });
+  const { data } = useContractRead({
+    address: "0x345FDDD623944ACDa874342411ceFfe73C093AD6",
+    abi: EnglishAuctionArtifact.abi,
+    functionName: "endAt",
+  });
+
+  const timestamp = data
+    ? Number(data) * 1000
+    : Date.now() + 7 * 24 * 60 * 60 * 1000;
+
+  // 使用 new Date() 将时间戳转换为日期字符串
+  const dateString = new Date(timestamp).toISOString();
+
+  const { data: bidAddress } = useContractRead({
+    address: "0x345FDDD623944ACDa874342411ceFfe73C093AD6",
+    abi: EnglishAuctionArtifact.abi,
+    functionName: "highestBidder",
+  });
+
+  // 處理bidAddress轉為string
+  const biderWallet = bidAddress ? bidAddress.toString() : "";
+
+  const { data: sellerAddress } = useContractRead({
+    address: "0x345FDDD623944ACDa874342411ceFfe73C093AD6",
+    abi: EnglishAuctionArtifact.abi,
+    functionName: "seller",
+  });
+
+  // 處理bidAddress轉為string
+  const sellerWallet = sellerAddress ? sellerAddress.toString() : "";
+
+
+  const { data: directBuyPrice } = useContractRead({
+    address: "0x345FDDD623944ACDa874342411ceFfe73C093AD6",
+    abi: EnglishAuctionArtifact.abi,
+    functionName: "directBuyPrice",
+    args: [],
+  });
+
+   // Ensure highestBid is a valid BigNumber
+   const buyPriceValue = directBuyPrice ? ethers.BigNumber.from(directBuyPrice) : ethers.constants.Zero;
+  
+   // Format highestBidValue
+   const buyPrice = ethers.utils.formatEther(buyPriceValue);
+
+
+   const { data: highestBid } = useContractRead({
+    address: "0x345FDDD623944ACDa874342411ceFfe73C093AD6",
+    abi: EnglishAuctionArtifact.abi,
+    functionName: "highestBid",
+  });
+  
+  // Ensure highestBid is a valid BigNumber
+  const highestBidValue = highestBid ? ethers.BigNumber.from(highestBid) : ethers.constants.Zero;
+  
+  // Format highestBidValue
+  const highestPrice = ethers.utils.formatEther(highestBidValue);
+
   return (
     <div className="sidebarFishShop-fishBox">
       <div className="sidebarFish-fishBox-list">
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">最新價格</p>
-          <div className="sidebar-box-list-item-text sidebar-box-list-item-text-blue sidebar-box-list-item-buy-lgNum">
-            <div className="sidebar-box-list-item-edit">
-              <div className="container">
-                <section className="countdown-timer">
-                  <div className="countdown-info">
-                    <div className="timer-box">
-                      <div id="flip-sheet-day" className="sheet"></div>
-                      <p id="days" className="primary">
-                        00
-                      </p>
-                    </div>
-                    <p className="sub-heading">D</p>
-                  </div>
-                  <div className="countdown-info">
-                    <div className="timer-box">
-                      <div id="flip-sheet-hour" className="sheet"></div>
-                      <div className="circle-left"></div>
-                      <p id="hours" className="primary">
-                        00
-                      </p>
-                      <div className="circle-right"></div>
-                    </div>
-                    <p className="sub-heading">H</p>
-                  </div>
-                  <div className="countdown-info">
-                    <div className="timer-box">
-                      <div id="flip-sheet-min" className="sheet"></div>
-                      <div className="circle-left"></div>
-                      <p id="minutes" className="primary">
-                        00
-                      </p>
-                      <div className="circle-right"></div>
-                    </div>
-                    <p className="sub-heading">M</p>
-                  </div>
-                  <div className="countdown-info">
-                    <div className="timer-box">
-                      <div id="flip-sheet-sec" className="sheet"></div>
-                      <div className="circle-left"></div>
-                      <p id="seconds" className="primary">
-                        00
-                      </p>
-                      <div className="circle-right"></div>
-                    </div>
-                    <p className="sub-heading">S</p>
-                  </div>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div className="sidebar-box-list-item-buy-text">1.08 ETH</div>
+
+          <CountdownTimer targetDate={dateString} />
+          <div className="sidebar-box-list-item-buy-text">{highestPrice} ETH</div>
           <div className="sidebar-box-list-item-buy-text">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -66,18 +81,18 @@ const SellerConfirmPanel = () => {
             >
               <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" />
             </svg>
-            <span>0x12344529380D22</span>
+            <span style={{overflow:"hidden", margin:"0px, 30px, 0px, 0px"}}>{biderWallet?.slice(0, 5)}.....{biderWallet.slice(-5)}</span>
           </div>
         </div>
 
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">地板價</p>
-          <div className="sidebar-box-list-item-buy-text">2.34 Eth</div>
+          <div className="sidebar-box-list-item-buy-text">{buyPrice} Eth</div>
         </div>
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">擁有者地址</p>
           <div className="sidebar-box-list-item-text sidebar-box-list-item-text-blue">
-            0x1234435674342D22
+          {sellerWallet?.slice(0, 5)}.....{sellerWallet.slice(-5)}
           </div>
         </div>
         <div className="sidebar-box-list-item">
