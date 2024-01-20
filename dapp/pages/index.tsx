@@ -13,6 +13,7 @@ import WrapWalletLink from '../components/WrapWalletLink';
 import { useGetNFT } from '../hooks/openSeaApi';
 import NFTCard from '../components/NFTCard';
 import BouncingBall from '../components/BouncingBall';
+import { NFTData } from '../types/ensDataType';
 import { useEthersSigner } from "../hooks/useEthersSigner";
 
 const DEFAULT_ACCOUNT: TBAccountParams = {
@@ -23,20 +24,42 @@ const DEFAULT_ACCOUNT: TBAccountParams = {
 const Home: NextPage = () => {
   const chain = 'sepolia'
   const identifier = 1
-  const _address = '0xc1f8d1260b5c004c40bad5153b087afd8e42900b'
+  const tba_contract_address = '0x6CcA2d398B2060DC824ba0Cdaf69a8e8344C329e'
   const [isOpen, setIsOpen] = useState(true);
   const [addressInput, setAddressInput] = useState<string>('');
   const [tbaTokenId, setTbaTokenId] = useState<number>(0);
   const { data: walletClient, isError, isLoading } = useWalletClient();
   const tokenboundClient = new TokenboundClient({ signer: walletClient, chainId: 11155111 })
-  const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT)
-  const [imgUrl, setImgUrl] = useState('')
-  const { nfts } = useGetNFT(chain, identifier, _address)
+  const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT            
   const signer = useEthersSigner({ chainId: 11155111 });
+  const [imgUrl, setImgUrl] = useState('')
+  const [nftData, setNftData] = useState<NFTData | null>(null);
+  const { nfts } = useGetNFT(chain, identifier, tba_contract_address)
 
+  // Get NFTs (by account)
   useEffect(() => {
     fetch(
-      `https://testnets-api.opensea.io/api/v2/chain/${chain}/contract/${_address}/nfts/${tbaTokenId}`
+      `https://testnets-api.opensea.io/api/v2/chain/${chain}/account/${addressInput}/nfts`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setNftData(data)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(nftData)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addressInput]);
+
+  useEffect(() => {
+    console.log(nftData)
+  }, [nftData]);
+
+  // Get NFTs (by contract)
+  useEffect(() => {
+    fetch(
+      `https://testnets-api.opensea.io/api/v2/chain/${chain}/contract/${tba_contract_address}/nfts/${tbaTokenId}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -49,16 +72,17 @@ const Home: NextPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tbaTokenId]);
 
+  // Get tba
   useEffect(() => {
     console.log(tbaTokenId);
     const myString: string = tbaTokenId.toString();
-    const getAccount = async () => {
+    const setDefaultTBA_Account = async () => {
       setTBAccount({
         tokenContract: _address,
         tokenId: myString,
       });
     };
-    getAccount();
+    setDefaultTBA_Account();
   }, [tbaTokenId]);
 
   useEffect(() => {
@@ -102,7 +126,7 @@ const Home: NextPage = () => {
         <div onClick={() => setIsOpen(!isOpen)}>
           <WrapWalletLink />
         </div>
-        <AquariumBag />
+        <AquariumBag nftData={nftData} />
         <SidebarMenu signer={signer} />
         {isOpen ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
