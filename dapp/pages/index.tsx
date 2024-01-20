@@ -14,6 +14,7 @@ import { useGetNFT } from '../hooks/openSeaApi';
 import NFTCard from '../components/NFTCard';
 import BouncingBall from '../components/BouncingBall';
 import { NFTData } from '../types/ensDataType';
+import { useEthersSigner } from "../hooks/useEthersSigner";
 
 const DEFAULT_ACCOUNT: TBAccountParams = {
   tokenContract: "0x",
@@ -27,11 +28,10 @@ const Home: NextPage = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [addressInput, setAddressInput] = useState<string>('');
   const [tbaTokenId, setTbaTokenId] = useState<number>(0);
-
   const { data: walletClient, isError, isLoading } = useWalletClient();
   const tokenboundClient = new TokenboundClient({ signer: walletClient, chainId: 11155111 })
-  const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT)
-
+  const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT            
+  const signer = useEthersSigner({ chainId: 11155111 });
   const [imgUrl, setImgUrl] = useState('')
   const [nftData, setNftData] = useState<NFTData | null>(null);
   const { nfts } = useGetNFT(chain, identifier, tba_contract_address)
@@ -78,7 +78,7 @@ const Home: NextPage = () => {
     const myString: string = tbaTokenId.toString();
     const setDefaultTBA_Account = async () => {
       setTBAccount({
-        tokenContract: "0x6CcA2d398B2060DC824ba0Cdaf69a8e8344C329e",
+        tokenContract: _address,
         tokenId: myString,
       });
     };
@@ -127,7 +127,7 @@ const Home: NextPage = () => {
           <WrapWalletLink />
         </div>
         <AquariumBag nftData={nftData} />
-        <SidebarMenu signer={undefined} />
+        <SidebarMenu signer={signer} />
         {isOpen ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Paper
