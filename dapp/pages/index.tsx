@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Head from 'next/head';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { Container, Paper, TextField, Button, Typography, Grid, Box, colors } from '@mui/material';
-import { useWalletClient } from 'wagmi'
+import { useAccount, useWalletClient } from 'wagmi'
 import { TokenboundClient } from '@tokenbound/sdk'
 import { type TBAccountParams } from "@tokenbound/sdk/dist/src";
 import AquariumBag from '../components/AquariumBag';
@@ -13,7 +13,7 @@ import WrapWalletLink from '../components/WrapWalletLink';
 import { useGetNFT } from '../hooks/openSeaApi';
 import NFTCard from '../components/NFTCard';
 import BouncingBall from '../components/BouncingBall';
-import { NFTData } from '../types/ensDataType';
+import { NFTData, aquariumDataType } from '../types/ensDataType';
 import { useEthersSigner } from "../hooks/useEthersSigner";
 
 const DEFAULT_ACCOUNT: TBAccountParams = {
@@ -34,7 +34,9 @@ const Home: NextPage = () => {
   const signer = useEthersSigner({ chainId: 11155111 });
   const [imgUrl, setImgUrl] = useState('')
   const [nftData, setNftData] = useState<NFTData | null>(null);
+  const [aquariumData, setAquariumData] = useState<aquariumDataType | null>(null);
   const { nfts } = useGetNFT(chain, identifier, tba_contract_address)
+  const { address } = useAccount();
 
   // Get NFTs (by account)
   useEffect(() => {
@@ -65,6 +67,7 @@ const Home: NextPage = () => {
       .then((data) => {
         console.log(data)
         setImgUrl(data.nft.image_url);
+        setAquariumData(data)
       })
       .catch((err) => {
         console.log(err);
@@ -127,7 +130,7 @@ const Home: NextPage = () => {
           <WrapWalletLink />
         </div>
         <AquariumBag nftData={nftData} />
-        <SidebarMenu signer={signer} />
+        <SidebarMenu signer={signer} aquariumData={aquariumData} />
         {isOpen ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Paper
@@ -186,7 +189,7 @@ const Home: NextPage = () => {
                     Example:
                   </Typography>
                   <Button onClick={() => {
-                    setAddressInput('0xd8FDf15e99b371214D6f1728C85f96635361978c');
+                    setAddressInput('0x21D07Aa5495609e009766cE9ABA798e5C668e86a');
                   }}>address 1</Button>
                   <Button onClick={() => {
                     setAddressInput('0x51840Ea7B892145feaCB347Ab2ebaac9032A2140');
@@ -197,10 +200,10 @@ const Home: NextPage = () => {
                 }}
                   onClick={() => setAdd(addressInput)} >Fetch fish
                 </Button> */}
-                <Typography variant='h3' align='center' sx={{
+                {address && address ? (<Typography variant='h3' align='center' sx={{
                   color: 'white',
                   mb: '1rem'
-                }}>My Aquarium</Typography>
+                }}>My Aquarium</Typography>) : null}
                 <NFTCard ethAddress={''} onTbaAddChange={setTbaTokenId} />
               </Container>
             </Paper>
