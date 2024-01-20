@@ -14,3 +14,30 @@ export type nftsData ={
   image_preview_url?: string;
   image_url?: string;
 }
+
+export type Trait = {
+  trait_type: string;
+  display_type: null; 
+  max_value: null;    
+  value: string;
+};
+
+export type NFT = {
+  identifier?: string;
+  collection: string;
+  contract: string;
+  token_standard: string;
+  name: string;
+  description: string;
+  image_url?: string;
+  metadata_url: string;
+  opensea_url: string;
+  updated_at: string;
+  is_disabled: boolean;
+  is_nsfw: boolean;
+  traits: Trait[];
+};
+
+export type NFTData = {
+  nfts: NFT[];
+};
