@@ -1,10 +1,15 @@
 import React from "react";
 import { useContractWrite } from 'wagmi';
 import EnglishAuctionArtifact from "../Contact/EnglishAuction.json";
+import { NFT } from '../types/ensDataType';
 
+interface Props {
+  aquariumData: {
+    nft: NFT
+  } | null
+}
 
-const SellerDealLPanel = () => {
-
+const SellerDealLPanel: React.FC<Props> = ({ aquariumData }) => {
   const { data, isLoading, isSuccess, write } = useContractWrite({
     address: '0x345FDDD623944ACDa874342411ceFfe73C093AD6',
     abi: EnglishAuctionArtifact.abi,
@@ -93,14 +98,14 @@ const SellerDealLPanel = () => {
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">水族箱名稱</p>
           <div className="sidebar-box-list-item-text sidebar-box-list-item-text-blue">
-            光之水族箱
+            {aquariumData && aquariumData ? (aquariumData?.nft?.name) : ('光之水族箱')}
           </div>
         </div>
 
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">故事介紹</p>
           <div className="sidebar-box-list-item-text">
-          Fxhash知名創作者生成式藝術家吳哲宇，這個光之水族箱裡可看見其作品SoulFish正緩緩的悠遊。每條魚皆是以數學公式生成，並且都是獨一無二的個體。
+            {aquariumData && aquariumData ? (aquariumData?.nft?.description) : ('Fxhash知名創作者生成式藝術家吳哲宇，這個光之水族箱裡可看見其作品SoulFish正緩緩的悠遊。每條魚皆是以數學公式生成，並且都是獨一無二的個體。')}
           </div>
         </div>
         <div className="sidebar-box-list-item">

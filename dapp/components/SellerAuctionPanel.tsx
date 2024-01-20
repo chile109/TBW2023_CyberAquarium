@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
+import { NFT } from '../types/ensDataType';
 
 interface Props {
   deployAuction: (
@@ -8,10 +9,14 @@ interface Props {
     startingBid: ethers.BigNumber,
     reservePrice: ethers.BigNumber
   ) => void;
+  aquariumData: {
+    nft: NFT
+  } | null;
 }
 
-const SellerAuctionPanel = ({ deployAuction }: Props) => {
+const SellerAuctionPanel = ({ deployAuction, aquariumData }: Props) => {
   const [buyPrice, setBuyPrice] = useState("");
+  console.log(aquariumData)
 
   const onClickButton = () => {
     // For debugging purposes, will use html input fields later
@@ -73,7 +78,7 @@ const SellerAuctionPanel = ({ deployAuction }: Props) => {
             </svg>
           </div>
           <div className="sidebar-box-list-item-edit">
-            <input type="text" className="sidebar-box-list-item-edit-input"        
+            <input type="text" className="sidebar-box-list-item-edit-input"
               value={buyPrice}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => setBuyPrice(event.target.value)}
             />
@@ -92,17 +97,15 @@ const SellerAuctionPanel = ({ deployAuction }: Props) => {
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">Name</p>
           <div className="sidebar-box-list-item-text sidebar-box-list-item-text-blue">
-            光之水族箱
+            {aquariumData && aquariumData ? (aquariumData?.nft?.name) : ('光之水族箱')}
           </div>
         </div>
-
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">Description</p>
           <div className="sidebar-box-list-item-text">
-            Fxhash知名創作者生成式藝術家吳哲宇，這個光之水族箱裡可看見其作品SoulFish正緩緩的悠遊。每條魚皆是以數學公式生成，並且都是獨一無二的個體。
+            {aquariumData && aquariumData ? (aquariumData?.nft?.description) : ('Fxhash知名創作者生成式藝術家吳哲宇，這個光之水族箱裡可看見其作品SoulFish正緩緩的悠遊。每條魚皆是以數學公式生成，並且都是獨一無二的個體。')}
           </div>
         </div>
-
         <button onClick={onClickButton} className="sidebar-box-list-btn">
           <svg
             xmlns="http://www.w3.org/2000/svg"

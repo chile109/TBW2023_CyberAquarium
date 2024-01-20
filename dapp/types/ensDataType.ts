@@ -24,20 +24,25 @@ export type Trait = {
 
 export type NFT = {
   identifier?: string;
-  collection: string;
-  contract: string;
-  token_standard: string;
-  name: string;
-  description: string;
+  collection?: string;
+  contract?: string;
+  token_standard?: string;
+  name?: string;
+  description?: string;
   image_url?: string;
-  metadata_url: string;
-  opensea_url: string;
-  updated_at: string;
-  is_disabled: boolean;
-  is_nsfw: boolean;
+  metadata_url?: string;
+  opensea_url?: string;
+  owners?: { address: string; quantity: number };
+  updated_at?: string;
+  is_disabled?: boolean;
+  is_nsfw?: boolean;
   traits: Trait[];
 };
 
 export type NFTData = {
-  nfts: NFT[];
+  nfts: NFT;
 };
+
+export type aquariumDataType = {
+  nft: NFT;
+}

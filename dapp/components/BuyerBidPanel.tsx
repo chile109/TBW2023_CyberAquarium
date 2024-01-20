@@ -3,8 +3,16 @@ import { ethers } from "ethers";
 import { useContractRead, useContractWrite } from "wagmi";
 import EnglishAuctionArtifact from "../Contact/EnglishAuction.json";
 import CountdownTimer from "./CountdownTimer";
+import { NFT } from '../types/ensDataType';
 
-const BuyerBidPanel = () => {
+interface Props {
+  aquariumData: {
+    nft: NFT
+  } | null
+}
+
+const BuyerBidPanel: React.FC<Props> = ({ aquariumData }) => {
+  console.log(aquariumData?.nft);
   const [bidPrice, setBidPrice] = useState("");
   const { data: auctionData } = useContractRead({
     address: "0x345FDDD623944ACDa874342411ceFfe73C093AD6",
@@ -59,11 +67,11 @@ const BuyerBidPanel = () => {
     args: [],
   });
 
-   // Ensure highestBid is a valid BigNumber
-   const buyPriceValue = directBuyPrice ? ethers.BigNumber.from(directBuyPrice) : ethers.constants.Zero;
-  
-   // Format highestBidValue
-   const buyPrice = ethers.utils.formatEther(buyPriceValue);
+  // Ensure highestBid is a valid BigNumber
+  const buyPriceValue = directBuyPrice ? ethers.BigNumber.from(directBuyPrice) : ethers.constants.Zero;
+
+  // Format highestBidValue
+  const buyPrice = ethers.utils.formatEther(buyPriceValue);
 
 
   const { data: highestBid } = useContractRead({
@@ -71,10 +79,10 @@ const BuyerBidPanel = () => {
     abi: EnglishAuctionArtifact.abi,
     functionName: "highestBid",
   });
-  
+
   // Ensure highestBid is a valid BigNumber
   const highestBidValue = highestBid ? ethers.BigNumber.from(highestBid) : ethers.constants.Zero;
-  
+
   // Format highestBidValue
   const highestPrice = ethers.utils.formatEther(highestBidValue);
 
@@ -96,7 +104,7 @@ const BuyerBidPanel = () => {
 
   // 處理bidAddress轉為string
   const sellerWallet = sellerAddress ? sellerAddress.toString() : "";
-  
+
   return (
     <div className="sidebarFishShop-fishBox">
       <div className="sidebarFish-fishBox-list">
@@ -106,10 +114,13 @@ const BuyerBidPanel = () => {
           </div>
         </div> */}
         <div className="sidebar-box-list-item">
-          <p className="sidebar-box-list-item-title">最新價格</p>
+          <p className="sidebar-box-list-item-title">拍賣截止日</p>
           <CountdownTimer targetDate={dateString} />
+          <p className="sidebar-box-list-item-title">最高出價</p>
           <div className="sidebar-box-list-item-buy-text">{highestPrice} ETH</div>
+          <p className="sidebar-box-list-item-title">出價者地址</p>
           <div className="sidebar-box-list-item-buy-text">
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -119,7 +130,7 @@ const BuyerBidPanel = () => {
               <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" />
             </svg>
             <span>
-            <span style={{overflow:"hidden", margin:"0px, 30px, 0px, 0px"}}>{biderWallet?.slice(0, 5)}.....{biderWallet.slice(-5)}</span>
+              <span style={{ overflow: "hidden", margin: "0px, 30px, 0px, 0px" }}>{biderWallet?.slice(0, 5)}.....{biderWallet.slice(-5)}</span>
             </span>
           </div>
         </div>
@@ -130,7 +141,8 @@ const BuyerBidPanel = () => {
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">你的出價</p>
           <div className="sidebar-box-list-item-edit">
-            <input type="text" className="sidebar-box-list-item-edit-input"        
+            {/* add type check */}
+            <input type="text" className="sidebar-box-list-item-edit-input"
               value={bidPrice}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => setBidPrice(event.target.value)}
             />
@@ -148,21 +160,20 @@ const BuyerBidPanel = () => {
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">擁有者地址</p>
           <div className="sidebar-box-list-item-text sidebar-box-list-item-text-blue">
-          {sellerWallet?.slice(0, 5)}.....{sellerWallet.slice(-5)}
+            {sellerWallet?.slice(0, 5)}.....{sellerWallet.slice(-5)}
           </div>
         </div>
 
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">水族箱名稱</p>
           <div className="sidebar-box-list-item-text sidebar-box-list-item-text-blue">
-            光之水族箱
+            {aquariumData && aquariumData ? (aquariumData?.nft?.name) : ('光之水族箱')}
           </div>
         </div>
-
         <div className="sidebar-box-list-item">
           <p className="sidebar-box-list-item-title">故事介紹</p>
           <div className="sidebar-box-list-item-text">
-            Fxhash知名創作者生成式藝術家吳哲宇，這個光之水族箱裡可看見其作品SoulFish正緩緩的悠遊。每條魚皆是以數學公式生成，並且都是獨一無二的個體。
+            {aquariumData && aquariumData ? (aquariumData?.nft?.description) : ('Fxhash知名創作者生成式藝術家吳哲宇，這個光之水族箱裡可看見其作品SoulFish正緩緩的悠遊。每條魚皆是以數學公式生成，並且都是獨一無二的個體。')}
           </div>
         </div>
 
@@ -184,7 +195,7 @@ const BuyerBidPanel = () => {
           競標出價
         </button>
 
-        {Number(endAtData) !== 0  && (
+        {Number(endAtData) !== 0 && (
           <button
             onClick={() => {
               writeWithdraw();

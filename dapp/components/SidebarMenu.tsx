@@ -5,12 +5,16 @@ import SellerDealLPanel from "./SellerDealPanel";
 import BuyerBidPanel from "./BuyerBidPanel";
 import { Contract, Signer, Wallet, ethers, providers } from "ethers";
 import EnglishAuctionArtifact from "../Contact/EnglishAuction.json";
+import { NFT } from '../types/ensDataType';
 
 interface Props {
   signer: ethers.providers.JsonRpcSigner | undefined;
+  aquariumData: {
+    nft: NFT
+  } | null;
 }
 
-const SidebarMenu = ({ signer }: Props) => {
+const SidebarMenu: React.FC<Props> = ({ signer, aquariumData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [auctionContract, setAuctionContract] = useState({} as ethers.Contract);
   const [auctionAddress, setAuctionAddress] = useState("");
@@ -74,10 +78,10 @@ const SidebarMenu = ({ signer }: Props) => {
           <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z" />
         </svg>
       </label>
-      {/* <SellerAuctionPanel deployAuction={deployContract} /> */}
-      {/* <SellerConfirmPanel  /> */}
-      {/* <SellerDealLPanel /> */}
-      <BuyerBidPanel />
+      {/* <SellerAuctionPanel deployAuction={deployContract} aquariumData={aquariumData} /> */}
+      {/* <SellerConfirmPanel  aquariumData={aquariumData}/> */}
+      {/* <SellerDealLPanel aquariumData={aquariumData}/> */}
+      <BuyerBidPanel aquariumData={aquariumData} />
     </div>
   );
 };
