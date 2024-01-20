@@ -1,5 +1,6 @@
 import React from 'react';
 import { ethers } from 'ethers';
+import CountdownTimer from './CountdownTimer';
 
 interface Props {
   deployAuction: (
@@ -27,20 +28,7 @@ const SellerAuctionPanel = ({deployAuction }:Props) => {
     <div className="sidebarFish-fishBox-list">
       <div className="sidebar-box-list-item">
         <p className="sidebar-box-list-item-title">起標價格</p>
-        <div className="sidebar-box-list-item-text sidebar-box-list-item-text-blue sidebar-box-list-item-buy-lgNum">
-          <div className="sidebar-box-list-item-edit">
-            <div className="sidebar-box-list-item-edit-rowline">
-              7
-              <span className="sidebar-box-list-item-edit-rowline-text">Ｄ</span>
-              0
-              <span className="sidebar-box-list-item-edit-rowline-text">Ｈ</span>
-              0
-              <span className="sidebar-box-list-item-edit-rowline-text">Ｍ</span>
-              0
-              <span className="sidebar-box-list-item-edit-rowline-text">S</span>
-            </div>
-          </div>
-        </div>
+        <CountdownTimer targetDate="2024-10-31T00:00:00" />
         <div className="sidebar-box-list-item-text sidebar-box-list-item-text-blue sidebar-box-list-item-buy-lgNum">
           0.1<span className="sidebar-box-list-item-edit-rowline-text">ETＨ</span>
           <svg xmlns="http://www.w3.org/2000/svg" className="sidebar-box-list-item-text-icon sidebar-box-list-item-buy-lgNum-icon" fill="currentColor" viewBox="0 0 16 16">
@@ -92,6 +80,8 @@ const SellerAuctionPanel = ({deployAuction }:Props) => {
         </svg>
         確認起標
       </button>
+    </div>
+    <div>
     </div>
   </div>
   );
