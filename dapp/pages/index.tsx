@@ -30,7 +30,7 @@ const Home: NextPage = () => {
   const [tbaTokenId, setTbaTokenId] = useState<number>(0);
   const { data: walletClient, isError, isLoading } = useWalletClient();
   const tokenboundClient = new TokenboundClient({ signer: walletClient, chainId: 11155111 })
-  const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT            
+  const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT)
   const signer = useEthersSigner({ chainId: 11155111 });
   const [imgUrl, setImgUrl] = useState('')
   const [nftData, setNftData] = useState<NFTData | null>(null);
@@ -78,7 +78,7 @@ const Home: NextPage = () => {
     const myString: string = tbaTokenId.toString();
     const setDefaultTBA_Account = async () => {
       setTBAccount({
-        tokenContract: _address,
+        tokenContract: tba_contract_address,
         tokenId: myString,
       });
     };
