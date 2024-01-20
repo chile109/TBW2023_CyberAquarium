@@ -40,7 +40,7 @@ export type NFT = {
 };
 
 export type NFTData = {
-  nfts: NFT;
+  nfts: NFT[];
 };
 
 export type aquariumDataType = {
