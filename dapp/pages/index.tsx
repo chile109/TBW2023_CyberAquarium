@@ -13,6 +13,7 @@ import WrapWalletLink from '../components/WrapWalletLink';
 import { useGetNFT } from '../hooks/openSeaApi';
 import NFTCard from '../components/NFTCard';
 import BouncingBall from '../components/BouncingBall';
+import { useEthersSigner } from "../hooks/useEthersSigner";
 
 const DEFAULT_ACCOUNT: TBAccountParams = {
   tokenContract: "0x",
@@ -22,7 +23,7 @@ const DEFAULT_ACCOUNT: TBAccountParams = {
 const Home: NextPage = () => {
   const chain = 'sepolia'
   const identifier = 1
-  const _address = '0x6CcA2d398B2060DC824ba0Cdaf69a8e8344C329e'
+  const _address = '0xc1f8d1260b5c004c40bad5153b087afd8e42900b'
   const [isOpen, setIsOpen] = useState(true);
   const [addressInput, setAddressInput] = useState<string>('');
   const [tbaTokenId, setTbaTokenId] = useState<number>(0);
@@ -31,6 +32,7 @@ const Home: NextPage = () => {
   const [TBAccount, setTBAccount] = useState<TBAccountParams>(DEFAULT_ACCOUNT)
   const [imgUrl, setImgUrl] = useState('')
   const { nfts } = useGetNFT(chain, identifier, _address)
+  const signer = useEthersSigner({ chainId: 11155111 });
 
   useEffect(() => {
     fetch(
@@ -52,7 +54,7 @@ const Home: NextPage = () => {
     const myString: string = tbaTokenId.toString();
     const getAccount = async () => {
       setTBAccount({
-        tokenContract: "0x6CcA2d398B2060DC824ba0Cdaf69a8e8344C329e",
+        tokenContract: _address,
         tokenId: myString,
       });
     };
@@ -101,7 +103,7 @@ const Home: NextPage = () => {
           <WrapWalletLink />
         </div>
         <AquariumBag />
-        <SidebarMenu signer={undefined} />
+        <SidebarMenu signer={signer} />
         {isOpen ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Paper
