@@ -29,8 +29,19 @@ const BuyerBidPanel: React.FC<Props> = ({ aquariumData }) => {
     address: "0x345FDDD623944ACDa874342411ceFfe73C093AD6",
     abi: EnglishAuctionArtifact.abi,
     functionName: "bid",
-    value: bidPrice ? BigInt(ethers.utils.parseEther(bidPrice).toString()) : undefined,
+    value: bidPrice ? BigInt(parseBidPrice(bidPrice)) : undefined,
   });
+
+  // 處理 bidPrice 的格式
+  function parseBidPrice(bidPrice: string) {
+    const isValidBidPrice = /^[0-9]+(\.[0-9]+)?$/.test(bidPrice);
+    if (!isValidBidPrice) {
+      alert('請輸入純數字')
+      setBidPrice('')
+      return "0";
+    }
+    return ethers.utils.parseEther(bidPrice).toString();
+  };
 
   const { write: writeBuy } = useContractWrite({
     address: "0x345FDDD623944ACDa874342411ceFfe73C093AD6",
