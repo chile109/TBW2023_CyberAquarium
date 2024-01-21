@@ -22,6 +22,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-ipfs-image": "^0.7.1",
+    "sweetalert2": "^11.10.3",
     "viem": "~1.19.15",
     "wagmi": "~1.4.12"
   },
