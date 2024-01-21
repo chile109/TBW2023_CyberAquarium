@@ -4,6 +4,7 @@ import { useContractRead, useContractWrite } from "wagmi";
 import EnglishAuctionArtifact from "../Contact/EnglishAuction.json";
 import CountdownTimer from "./CountdownTimer";
 import { NFT } from '../types/ensDataType';
+import Swal from 'sweetalert2'
 
 interface Props {
   aquariumData: {
@@ -36,7 +37,12 @@ const BuyerBidPanel: React.FC<Props> = ({ aquariumData }) => {
   function parseBidPrice(bidPrice: string) {
     const isValidBidPrice = /^[0-9]+(\.[0-9]+)?$/.test(bidPrice);
     if (!isValidBidPrice) {
-      alert('請輸入純數字')
+      Swal.fire({
+        title: 'Invalid value !',
+        text: 'Please enter a valid bid price',
+        icon: 'error',
+        confirmButtonText: 'ok'
+      })
       setBidPrice('')
       return "0";
     }
