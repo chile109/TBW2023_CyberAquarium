@@ -161,6 +161,7 @@ body {
   left: 2rem;
   top: 1.5rem;
   justify-content: center;
+  cursor: pointer;
 }
 .wrap-wallet-link-icon {
   width: 1rem;
@@ -212,6 +213,7 @@ body {
   position: absolute;
   top: 2rem;
   right: 236px;
+  cursor: pointer;
 }
 .sidebar-box-list {
   width: 80%;
@@ -356,6 +358,7 @@ body {
   z-index: 1900;
   background-image: url(../img/btnBg.png);
   background-size: cover;
+  cursor: pointer;
 }
 .sidebarFish-fishBox {
   width: 300px;
@@ -417,6 +420,7 @@ body {
   z-index: 1900;
   background-image: url(../img/btnBg-shop.png);
   background-size: cover;
+  cursor: pointer;
 }
 .sidebarFishShop-fishBox {
   width: 300px;
