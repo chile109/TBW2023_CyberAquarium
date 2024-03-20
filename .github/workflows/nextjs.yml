@@ -28,13 +28,11 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./dapp
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Detect package manager
+        working-directory: ./app
         id: detect-package-manager
         run: |
           if [ -f "${{ github.workspace }}/yarn.lock" ]; then
